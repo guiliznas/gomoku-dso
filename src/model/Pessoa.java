@@ -1,5 +1,5 @@
 package model;
 
-public class Pessoa extends Pessoa {
+public class Pessoa extends Jogador {
     
 }
