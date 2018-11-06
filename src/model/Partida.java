@@ -4,6 +4,7 @@ public class Partida {
 
     private Jogador jogador1;
     private Jogador jogador2;
+    private String vencedor;
 
     public Partida() {
 
