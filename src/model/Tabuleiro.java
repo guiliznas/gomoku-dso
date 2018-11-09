@@ -7,7 +7,7 @@ public class Tabuleiro {
         tabuleiro = new byte[tamanho][tamanho];
         for (int i = 0; i < tamanho; i++) {
             for (int j = 0; j < tamanho; j++) {
-                tabuleiro[i][j];
+                tabuleiro[i][j] = 0;
             }
         }
     }

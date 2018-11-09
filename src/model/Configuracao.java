@@ -1,5 +1,7 @@
 package model;
 
+import java.awt.Color;
+
 public class Configuracao {
     
     private String nome1 = "Jogador 2";

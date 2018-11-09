@@ -1,5 +1,9 @@
 package control;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Image;
+
 public class UtilsUI {
     
     public static Font fonteBotaoPrimario;
@@ -19,13 +23,10 @@ public class UtilsUI {
         switch (campo){
             case (byte)1:
                 return imgJogador1;
-            break;
             case (byte)-1:
                 return imgJogador2;
-            break;
             case (byte)0:
                 return imgCampoVazio;
-            break;
             default:
                 return null;
         }

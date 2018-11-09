@@ -1,6 +1,6 @@
 package model;
 
-public abstract Jogador {
+public abstract class Jogador {
 
     private String nome;
 
