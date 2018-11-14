@@ -10,6 +10,11 @@ public class ITabuleiro extends JPanel{
     private JButton[][] matrizBotoes = new JButton[TAMANHO_TABULEIRO][TAMANHO_TABULEIRO];
     private JPanel panel;
     
+    public ITabuleiro()
+    {
+        adicionaComponentesTabuleiro(); 
+    }
+
     public void adicionaComponentesTabuleiro() {
         this.panel= new JPanel();
         this.panel.setLayout(new GridLayout(TAMANHO_TABULEIRO, TAMANHO_TABULEIRO));
