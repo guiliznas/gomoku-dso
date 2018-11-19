@@ -2,10 +2,13 @@ package view;
 
 import javax.swing.*;
 import java.awt.GridLayout;
+import java.util.ArrayList;
+import model.Historico;
+import model.Partida;
 
 public class IHistorico extends JDialog{
     private JDialog historicoJDialog;
-    private String [] colunas = {"Jogador 1","Jogador 2", "Ganhador", "Data"};
+    private String [] colunas = {"Jogador 1","Jogador 2", "Ganhador", "Duração", "Data"};
     private Object [][] dados = new Object[100][6];
  
     private JTable tabela = new JTable(dados, colunas);
@@ -26,9 +29,21 @@ public class IHistorico extends JDialog{
         return this.historicoJDialog;
     }
     public void preencherTabela() {
-        this.dados[0][0]= "Alfeu";
-        this.dados[0][1]= "Guilherme";
-        this.dados[0][2]= "Alfeu";
-        this.dados[0][3]= "13/11/2018";
+//        this.dados[0][0]= "Alfeu";
+//        this.dados[0][1]= "Guilherme";
+//        this.dados[0][2]= "Alfeu";
+//        this.dados[0][3]= "13/11/2018";
+
+        Historico h = new Historico();
+        ArrayList<Partida> historico = h.getHistorico();
+        
+        for (int i = 0; i < historico.size(); i++) {
+            this.dados[i][0] = historico.get(i).getJogador1().getNome();
+            this.dados[i][1] = historico.get(i).getJogador2().getNome();
+            this.dados[i][2] = historico.get(i).getVencedor();
+            this.dados[i][3] = historico.get(i).getDuracao();
+            this.dados[i][4] = historico.get(i).getData();
+        }
+
     }
 }

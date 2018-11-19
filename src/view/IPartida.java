@@ -50,7 +50,7 @@ public class IPartida extends JFrame{
 
     private JDialog sobreJDialog;
     private ISobre sobre = new ISobre();
-
+    
     public IPartida()
     {
         criarPartida(); 

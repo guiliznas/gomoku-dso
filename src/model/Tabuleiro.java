@@ -15,4 +15,8 @@ public class Tabuleiro {
     public byte getPosicao(int x, int y){
         return tabuleiro[x][y];
     }
+    
+    public byte[][] get(){
+        return tabuleiro;
+    }
 }
