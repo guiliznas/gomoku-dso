@@ -1,8 +1,10 @@
 package principal;
 
+import com.sun.prism.paint.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.util.Random;
+import javax.swing.JOptionPane;
 import model.Tabuleiro;
 import view.IPartida;
 
@@ -17,6 +19,7 @@ public class Gomoku {
     
     public static ImageIcon icone1;
     public static ImageIcon icone2;
+    public static ImageIcon icone0;
     
     public static final int VERIFICA_PRA_CIMA = 0;
     public static final int VERIFICA_PRA_BAIXO = 1;
@@ -33,8 +36,17 @@ public class Gomoku {
    
     public Gomoku () {
         partida = new IPartida();
-        Gomoku.icone1 = new ImageIcon(getClass().getResource("/001.png"));
-        Gomoku.icone2 = new ImageIcon(getClass().getResource("/002.png"));
+        Gomoku.icone1 = new ImageIcon(getClass().getResource("/001_.png"));
+        Gomoku.icone2 = new ImageIcon(getClass().getResource("/002_.png"));
+        Gomoku.icone0 = new ImageIcon(getClass().getResource("/000.png"));
+        for (int i = 0; i < 15; i++) {
+            for (int j = 0; j < 15; j++) {
+                matrizBotoes[i][j].setOpaque(false);
+                matrizBotoes[i][j].setContentAreaFilled(false);
+                matrizBotoes[i][j].setBorderPainted(false);
+                matrizBotoes[i][j].setIcon(icone0);
+            }
+        }
     }
     
     public static void jogada(int i, int j){
@@ -86,6 +98,7 @@ public class Gomoku {
         
         if(contadorDiagonalSecundaria>=4||contadorDiagonalPrincipal>=4||contadorEsquerdaDireita>=4||contadorCimaBaixo>=4){//4 porque considera a propria peca 
             System.out.println("Ganhou o Jogador"+tabuleiro[i][j]);
+            JOptionPane.showMessageDialog(null, "Ganhou o jogador "+tabuleiro[i][j]);
             return tabuleiro[i][j];//retorna o jogador ganhador
         }else{
             return 0; //ninguém ganhou
@@ -169,6 +182,7 @@ public class Gomoku {
         }
         return empate;
     }
+    
     public static int[] jogadaRobo(byte[][] tabuleiro,int i, int j,int nivel){
         int[] posicoes = {0,0};
         int evitaDemora = 0;

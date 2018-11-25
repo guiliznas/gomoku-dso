@@ -8,6 +8,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import principal.Gomoku;
 
 public class IPartida extends JFrame{
     private JMenuBar barraJMenuBar;// barra de menu
@@ -131,6 +132,7 @@ public class IPartida extends JFrame{
                     placarJogador2JLabel.setText("     Jogador 2 : 0 ");
                     tempoInicio = System.currentTimeMillis();
                     iniciaCronometro();
+                    Gomoku.tabuleiro.reset();
                }
             } 
         ); 

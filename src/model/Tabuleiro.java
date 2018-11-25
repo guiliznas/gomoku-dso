@@ -1,5 +1,7 @@
 package model;
 
+import principal.Gomoku;
+
 public class Tabuleiro {
     byte[][] tabuleiro;
 
@@ -18,5 +20,14 @@ public class Tabuleiro {
     
     public byte[][] get(){
         return tabuleiro;
+    }
+    
+    public void reset(){
+        for (int i = 0; i < tabuleiro.length; i++) {
+            for (int j = 0; j < tabuleiro[0].length; j++) {
+                tabuleiro[i][j] = 0;
+                Gomoku.matrizBotoes[i][j].setIcon(Gomoku.icone0);
+            }
+        }
     }
 }
