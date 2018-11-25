@@ -47,6 +47,7 @@ public class Gomoku {
                 matrizBotoes[i][j].setIcon(icone0);
             }
         }
+        System.out.println(partida.configuracoes);
     }
     
     public static void jogada(int i, int j){

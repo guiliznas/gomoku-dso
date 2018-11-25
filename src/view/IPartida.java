@@ -9,6 +9,7 @@ import java.util.TimerTask;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import principal.Gomoku;
+import model.Configuracao;
 
 public class IPartida extends JFrame{
     private JMenuBar barraJMenuBar;// barra de menu
@@ -44,7 +45,7 @@ public class IPartida extends JFrame{
     private IRanking ranking = new IRanking();
 
     private JDialog configuracoesJDialog;
-    private IConfiguracoes configuracoes = new IConfiguracoes();
+    public IConfiguracoes configuracoes = new IConfiguracoes();
 
     private JDialog historicoJDialog;
     private IHistorico historico = new IHistorico();
@@ -70,6 +71,14 @@ public class IPartida extends JFrame{
         frame.setVisible(true);
     }
 
+    public void novaPartida(){
+        Gomoku.tabuleiro.reset();
+        IConfiguracoes.config.load();
+        Configuracao c = IConfiguracoes.config;
+        placarJogador1JLabel.setText(c.getNome1());
+        placarJogador2JLabel.setText(c.getNome2());
+    }
+    
     public void criarTabuleiro(){
         panelTabuleiro = tabuleiro.getTabuleiro();
         panelTabuleiro.setBounds( 20, 50, 500, 500 ); //(x, y, width, height)
@@ -128,11 +137,13 @@ public class IPartida extends JFrame{
                public void actionPerformed( ActionEvent event )
                {
                     timer = null;
-                    placarJogador1JLabel.setText("Jogador 1 : 0    ");
-                    placarJogador2JLabel.setText("     Jogador 2 : 0 ");
+//                    placarJogador1JLabel.setText("Jogador 1 : 0    ");
+//                    placarJogador2JLabel.setText("     Jogador 2 : 0 ");
+                    placarJogador1JLabel.setText(IConfiguracoes.config.getNome1());
+                    placarJogador2JLabel.setText(IConfiguracoes.config.getNome2());
                     tempoInicio = System.currentTimeMillis();
                     iniciaCronometro();
-                    Gomoku.tabuleiro.reset();
+                    novaPartida();
                }
             } 
         ); 

@@ -1,5 +1,8 @@
 package view;
 
+import control.Serializer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Hashtable;
 import javax.swing.*;
 import javax.swing.JSlider;
@@ -74,6 +77,18 @@ public class IConfiguracoes extends JDialog{
         this.corPartidaJComboBox.setBounds( 190, 240, 150, 20 ); //(x, y, width, height)
         this.okJButton = new JButton("OK");
         this.okJButton.setBounds( 200, 300, 100, 20 ); //(x, y, width, height)
+        this.okJButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                Serializer s = new Serializer();
+                Configuracao c = new Configuracao();
+                c.setNome1(nome1JTextField.getText());
+                c.setNome2(nome2JTextField.getText());
+//                c.setNivelBot(nivelBotJSlider.getLabelTable().get(nivelBotJSlider.getValue()));
+                s.salvarConfiguracao(c);
+                System.out.println("salvo");
+            }
+        });
 
         this.configuracoesJDialog.add(this.nome1JLabel);
         this.configuracoesJDialog.add(this.nome1JTextField);
