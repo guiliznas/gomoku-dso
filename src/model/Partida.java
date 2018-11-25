@@ -1,8 +1,8 @@
 package model;
 
-import control.Serializer;
+import java.io.Serializable;
 
-public class Partida extends Serializer {
+public class Partida implements Serializable {
 
     private Jogador jogador1;
     private Jogador jogador2;
@@ -11,7 +11,7 @@ public class Partida extends Serializer {
     private String data;
 
     public Partida() {
-
+        
     }
 
     public Partida(Jogador jogador1, Jogador jogador2) {
@@ -52,6 +52,11 @@ public class Partida extends Serializer {
     
     public long getDuracao(){
         return duracao;
+    }
+
+    @Override
+    public String toString() {
+        return "\nPartida{" + "jogador1=" + jogador1 + ", jogador2=" + jogador2 + ", vencedor=" + vencedor + ", duracao=" + duracao + ", data=" + data + '}';
     }
 
 }

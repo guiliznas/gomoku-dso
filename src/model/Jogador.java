@@ -1,6 +1,8 @@
 package model;
 
-public abstract class Jogador {
+import java.io.Serializable;
+
+public abstract class Jogador implements Serializable{
 
     private String nome;
 
@@ -14,6 +16,11 @@ public abstract class Jogador {
 
     public void setNome(String nome){
         this.nome = nome;
+    }
+
+    @Override
+    public String toString() {
+        return "Jogador{" + "nome=" + nome + '}';
     }
 
 }

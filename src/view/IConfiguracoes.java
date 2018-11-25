@@ -1,7 +1,9 @@
 package view;
 
+import java.util.Hashtable;
 import javax.swing.*;
 import javax.swing.JSlider;
+import model.Configuracao;
 
 public class IConfiguracoes extends JDialog{
     private static String[] cores = {"Branco", "Azul" , "Verde", "Amarelo" , "Laranja", "Cinza","Vermelho","Rosa","Preto"};
@@ -21,13 +23,17 @@ public class IConfiguracoes extends JDialog{
     private JButton cancelJButton;
     private JButton okJButton;
 
-    private int sMin = 1;
-    private int sMax = 3;
+    private int sMin = 0;
+    private int sMax = 2;
     private int sPos = 1;
 
+    public static Configuracao config = new Configuracao();
+    
     public IConfiguracoes()
     {
-        adicionaComponentesConfiguracoes(); 
+        config.load();
+        System.out.println(config);
+        adicionaComponentesConfiguracoes();
     }
     public void adicionaComponentesConfiguracoes() {
         this.configuracoesJDialog = new JDialog();
@@ -47,11 +53,16 @@ public class IConfiguracoes extends JDialog{
         this.cancelJButton = new JButton("Cancelar");
         this.cancelJButton.setBounds( 90, 300, 100, 20 ); //(x, y, width, height)
 
-        this.nome1JTextField = new JTextField(" ");
+        this.nome1JTextField = new JTextField(config == null ? " " : config.getNome1());
         this.nome1JTextField.setBounds( 190, 60, 150, 20 ); //(x, y, width, height)
-        this.nome2JTextField = new JTextField(" ");
+        this.nome2JTextField = new JTextField(config == null ? " " : config.getNome2());
         this.nome2JTextField.setBounds( 190, 100, 150, 20 ); //(x, y, width, height)
-        this.nivelBotJSlider = new JSlider(JSlider.HORIZONTAL, sMin, sMax, sPos); 
+        this.nivelBotJSlider = new JSlider(JSlider.HORIZONTAL, sMin, sMax, config == null ? sPos : config.getNivelBot().get());
+        Hashtable<Integer, JLabel> labels = new Hashtable<>();
+        labels.put(0, new JLabel("Dificil"));
+        labels.put(1, new JLabel("Médio"));
+        labels.put(2, new JLabel("Facil"));
+        this.nivelBotJSlider.setLabelTable(labels);
         this.nivelBotJSlider.setMajorTickSpacing(1);
         this.nivelBotJSlider.setMinorTickSpacing(1);
         this.nivelBotJSlider.setPaintTicks(true);

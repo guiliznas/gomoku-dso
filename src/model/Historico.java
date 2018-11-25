@@ -1,5 +1,6 @@
 package model;
 
+import control.Serializer;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -9,16 +10,24 @@ public class Historico {
     private ArrayList<Partida> partidas;
     
     public Historico(){
-        partidas = new ArrayList<>();
-        Partida p = new Partida(new Pessoa("Teste1"), new Pessoa("Teste2"));
-        p.setVencedor("Teste1");
-        partidas.add(p);
-        p = new Partida(new Pessoa("Teste1"), new Pessoa("Teste2"));
-        p.setVencedor("Teste1");
-        partidas.add(p);
-        p = new Partida(new Pessoa("Teste1"), new Pessoa("Teste2"));
-        p.setVencedor("Teste2");
-        partidas.add(p);
+        try {
+            Serializer s = new Serializer();
+            partidas = s.readPartidas();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        if (partidas == null) {
+            partidas = new ArrayList<>();
+            Partida p = new Partida(new Pessoa("Teste1"), new Pessoa("Teste2"));
+            p.setVencedor("Teste1");
+            partidas.add(p);
+            p = new Partida(new Pessoa("Teste1"), new Pessoa("Teste2"));
+            p.setVencedor("Teste1");
+            partidas.add(p);
+            p = new Partida(new Pessoa("Teste1"), new Pessoa("Teste2"));
+            p.setVencedor("Teste2");
+            partidas.add(p);
+        }
     }
     
     public ArrayList<Partida> getHistorico(){
