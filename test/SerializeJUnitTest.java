@@ -1,4 +1,5 @@
 import control.Serializer;
+import java.awt.Color;
 import java.util.ArrayList;
 import model.Configuracao;
 import model.Dificuldade;
@@ -42,6 +43,8 @@ public class SerializeJUnitTest {
         Configuracao c = new Configuracao();
         Serializer s = new Serializer();
         c.setNome1("Teste 1");
+        c.setCorPartida(Color.GRAY);
+        c.setCorTabuleiro(Color.blue);
         s.salvarConfiguracao(c);
         System.out.println(c);
         System.out.println(s.readConfig());

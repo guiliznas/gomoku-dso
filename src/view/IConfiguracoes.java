@@ -1,16 +1,19 @@
 package view;
 
 import control.Serializer;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Map;
 import javax.swing.*;
 import javax.swing.JSlider;
 import model.Configuracao;
 
 public class IConfiguracoes extends JDialog{
     private static String[] cores = {"Branco", "Azul" , "Verde", "Amarelo" , "Laranja", "Cinza","Vermelho","Rosa","Preto"};
-    
+    private static Map<String, Color> colors = new HashMap<>();
     private JDialog configuracoesJDialog;
 
     private JLabel nome1JLabel;
@@ -34,6 +37,15 @@ public class IConfiguracoes extends JDialog{
     
     public IConfiguracoes()
     {
+        colors.put("Branco", Color.WHITE);
+        colors.put("Azul", Color.BLUE);
+        colors.put("Verde", Color.GREEN);
+        colors.put("Amarelo", Color.YELLOW);
+        colors.put("Laranja", Color.ORANGE);
+        colors.put("Cinza", Color.GRAY);
+        colors.put("Vermelho", Color.RED);
+        colors.put("Rosa", Color.PINK);
+        colors.put("Preto", Color.DARK_GRAY); // Ou preto mesmo?
         config.load();
         System.out.println(config);
         adicionaComponentesConfiguracoes();
@@ -84,6 +96,10 @@ public class IConfiguracoes extends JDialog{
                 Configuracao c = new Configuracao();
                 c.setNome1(nome1JTextField.getText());
                 c.setNome2(nome2JTextField.getText());
+                c.setCorPartida(colors.get(corPartidaJComboBox.getSelectedItem()));
+                c.setCorTabuleiro(colors.get(corTabuleiroJComboBox.getSelectedItem()));
+//                System.out.println(Integer.toString(Color.WHITE.getRGB()));
+//                System.out.println(new Color(Integer.parseInt(Integer.toString(Color.WHITE.getRGB()))));
 //                c.setNivelBot(nivelBotJSlider.getLabelTable().get(nivelBotJSlider.getValue()));
                 s.salvarConfiguracao(c);
                 System.out.println("salvo");

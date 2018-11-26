@@ -23,6 +23,8 @@ public class Configuracao {
             this.nome1 = c.getNome1();
             this.nome2 = c.getNome2();
             this.nivelBot = c.getNivelBot();
+            this.corPartida = c.getCorPartida();
+            this.corTabuleiro = c.getCorTabuleiro();
             this.tamanhoTabuleiro = c.getTamanhoTabuleiro();
         }
     }

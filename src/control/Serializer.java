@@ -1,5 +1,6 @@
 package control;
 
+import java.awt.Color;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
@@ -126,6 +127,8 @@ public class Serializer {
                 config.setNome2(configText.split(" - ")[1]);
                 config.setNivelBot(Dificuldade.valueOf(configText.split(" - ")[2]));
                 config.setTamanhoTabuleiro(Integer.parseInt(configText.split(" - ")[3]));
+                config.setCorPartida(new Color(Integer.parseInt(configText.split(" - ")[4])));
+                config.setCorTabuleiro(new Color(Integer.parseInt(configText.split(" - ")[5])));
 //                config.setNome1(configI.next());
 //                config.setNome2(configI.next());
 //                config.setNivelBot(Dificuldade.valueOf(configI.next()));
@@ -144,6 +147,7 @@ public class Serializer {
         } finally {
             configI.close();
         }
+        System.out.println(config);
         return config;
     }
 
@@ -162,9 +166,10 @@ public class Serializer {
     public void salvarConfiguracao(Configuracao c) {
         openFileConfig();
         try {
-            configO.format("%s - %s - %s - %d\n", c.getNome1(),
+            configO.format("%s - %s - %s - %d - %s - %s\n", c.getNome1(),
                     c.getNome2(), c.getNivelBot(),
-                    c.getTamanhoTabuleiro());
+                    c.getTamanhoTabuleiro(), Integer.toString(c.getCorPartida().getRGB()),
+                    Integer.toString(c.getCorTabuleiro().getRGB()));
             System.out.println("Configuração salva.");
         } catch (FormatterClosedException formatterClosedException) {
             System.err.println("Error writing to file.");

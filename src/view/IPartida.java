@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.*;
 import javax.swing.*;
@@ -55,7 +56,7 @@ public class IPartida extends JFrame{
     
     public IPartida()
     {
-        criarPartida(); 
+        criarPartida();
     }
 
     public void criarPartida() {
@@ -77,6 +78,9 @@ public class IPartida extends JFrame{
         Configuracao c = IConfiguracoes.config;
         placarJogador1JLabel.setText(c.getNome1());
         placarJogador2JLabel.setText(c.getNome2());
+        
+        tabuleiro.getTabuleiro().setBackground(c.getCorTabuleiro());
+        panelPlacar.setBackground(c.getCorPartida());
     }
     
     public void criarTabuleiro(){
