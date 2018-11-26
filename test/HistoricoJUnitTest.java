@@ -20,7 +20,7 @@ public class HistoricoJUnitTest {
     @Test
     public void buscarHistorico(){
         Historico h = new Historico();
-        System.out.println(h.getHistorico());
+//        System.out.println(h.getHistorico());
     }
     
 }

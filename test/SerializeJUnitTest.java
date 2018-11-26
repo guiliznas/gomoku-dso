@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
  */
 public class SerializeJUnitTest {
 
-    @Test
+//    @Test
     public void partidas(){
         ArrayList<Partida> partidas = new ArrayList<>();
         Serializer s = new Serializer();
@@ -33,12 +33,12 @@ public class SerializeJUnitTest {
         System.out.println(pList);
     }
 
-    @Test
+//    @Test
     public void teste(){
         System.out.println(Dificuldade.valueOf("FACIL"));
     }
     
-    @Test
+//    @Test
     public void configuracao(){
         Configuracao c = new Configuracao();
         Serializer s = new Serializer();
@@ -49,6 +49,12 @@ public class SerializeJUnitTest {
         System.out.println(c);
         System.out.println(s.readConfig());
         assertEquals(c.toString(), s.readConfig().toString());
+    }
+    
+    @Test
+    public void loadPartidas(){
+        Serializer s = new Serializer();
+        System.out.println(s.readPartidas());
     }
     
 }

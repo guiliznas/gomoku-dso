@@ -2,14 +2,20 @@ package model;
 
 import control.Serializer;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
 
 public class Historico {
-    
+
     private ArrayList<Partida> partidas;
-    
-    public Historico(){
+
+    public Historico() {
         try {
             Serializer s = new Serializer();
             partidas = s.readPartidas();
@@ -29,14 +35,14 @@ public class Historico {
             partidas.add(p);
         }
     }
-    
-    public ArrayList<Partida> getHistorico(){
+
+    public ArrayList<Partida> getHistorico() {
         return partidas;
     }
-    
-    public Map<String, Integer> getRanking(){
-        Map<String, Integer> rank = new LinkedHashMap<String, Integer>();
-        
+
+    public Map<String, Integer> getRanking() {
+        HashMap<String, Integer> rank = new LinkedHashMap<String, Integer>();
+
         for (Partida p : partidas) {
             if (rank.get(p.getJogador1().getNome()) == null) {
                 rank.put(p.getJogador1().getNome(), 0);
@@ -50,8 +56,28 @@ public class Historico {
                 rank.put(p.getVencedor(), rank.get(p.getVencedor()) + 1);
             }
         }
-        
-        return rank;
+
+        return sortByValues(rank);
     }
-    
+
+    private static HashMap sortByValues(HashMap map) {
+        List list = new LinkedList(map.entrySet());
+        // Defined Custom Comparator here
+        Collections.sort(list, new Comparator() {
+            public int compare(Object o1, Object o2) {
+                return ((Comparable) ((Map.Entry) (o2)).getValue())
+                        .compareTo(((Map.Entry) (o1)).getValue());
+            }
+        });
+
+        // Here I am copying the sorted list in HashMap
+        // using LinkedHashMap to preserve the insertion order
+        HashMap sortedHashMap = new LinkedHashMap();
+        for (Iterator it = list.iterator(); it.hasNext();) {
+            Map.Entry entry = (Map.Entry) it.next();
+            sortedHashMap.put(entry.getKey(), entry.getValue());
+        }
+        return sortedHashMap;
+    }
+
 }

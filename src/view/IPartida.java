@@ -11,6 +11,9 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 import principal.Gomoku;
 import model.Configuracao;
+import model.Jogador;
+import model.Partida;
+import model.Pessoa;
 
 public class IPartida extends JFrame{
     private JMenuBar barraJMenuBar;// barra de menu
@@ -78,6 +81,8 @@ public class IPartida extends JFrame{
         Configuracao c = IConfiguracoes.config;
         placarJogador1JLabel.setText(c.getNome1());
         placarJogador2JLabel.setText(c.getNome2());
+        Gomoku.part = new Partida(new Pessoa(c.getNome1()), new Pessoa(c.getNome2()));
+        Gomoku.part.setData(format.format(new Date().getTime()));
         
         tabuleiro.getTabuleiro().setBackground(c.getCorTabuleiro());
         panelPlacar.setBackground(c.getCorPartida());
@@ -198,6 +203,7 @@ public class IPartida extends JFrame{
                public void actionPerformed( ActionEvent event )
                {
                     criarHistorico();
+                    historico.preencherTabela();
                }
             } 
         ); 
@@ -249,13 +255,16 @@ public class IPartida extends JFrame{
 
     public void iniciaCronometro(){
         if (timer == null){      
-            timer = new Timer();  
+            timer = new Timer();
             TimerTask tarefa = new TimerTask() {     
                 public void run(){      
                     try {     
                          String data = format.format(new Date().getTime());//pega a data atual
                          long diferenca=((System.currentTimeMillis() - tempoInicio)/ 1000);//armazena a diferença entre o inicio da exucação do programa e o tempo atual
-                         tempoJogoJLabel.setText("Tempo: "+diferenca );  
+                         tempoJogoJLabel.setText("Tempo: "+diferenca );
+                         if (Gomoku.part != null) {
+                            Gomoku.part.setDuracao(diferenca);
+                         }
                          //System.out.println(data + "  " + diferenca);  descomente isso se quiser testar
                     } catch (Exception e) {      
                          e.printStackTrace();      

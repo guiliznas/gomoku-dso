@@ -1,10 +1,12 @@
 package principal;
 
 import com.sun.prism.paint.Color;
+import control.Serializer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.util.Random;
 import javax.swing.JOptionPane;
+import model.Partida;
 import model.Tabuleiro;
 import view.IPartida;
 
@@ -33,6 +35,7 @@ public class Gomoku {
     public static boolean roboJogando = true;
     public static Random gerador = new Random();
     
+    public static Partida part;
    
     public Gomoku () {
         partida = new IPartida();
@@ -100,6 +103,9 @@ public class Gomoku {
         if(contadorDiagonalSecundaria>=4||contadorDiagonalPrincipal>=4||contadorEsquerdaDireita>=4||contadorCimaBaixo>=4){//4 porque considera a propria peca 
             System.out.println("Ganhou o Jogador"+tabuleiro[i][j]);
             JOptionPane.showMessageDialog(null, "Ganhou o jogador "+tabuleiro[i][j]);
+            Serializer s = new Serializer();
+            part.setVencedor(tabuleiro[i][j] == 1? part.getJogador1().getNome() : part.getJogador2().getNome());
+            s.addPartida(part);
             return tabuleiro[i][j];//retorna o jogador ganhador
         }else{
             return 0; //ninguém ganhou
