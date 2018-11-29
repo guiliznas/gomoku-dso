@@ -42,22 +42,26 @@ public class Historico {
 
     public Map<String, Integer> getRanking() {
         HashMap<String, Integer> rank = new LinkedHashMap<String, Integer>();
+//        try {
+            for (Partida p : partidas) {
+                if (rank.get(p.getJogador1().getNome()) == null) {
+                    rank.put(p.getJogador1().getNome(), 0);
+                }
+                if (rank.get(p.getJogador2().getNome()) == null) {
+                    rank.put(p.getJogador2().getNome(), 0);
+                }
+                if (rank.get(p.getVencedor()) == null) {
+                    rank.put(p.getVencedor(), 1);
+                } else {
+                    rank.put(p.getVencedor(), rank.get(p.getVencedor()) + 1);
+                }
+            }
 
-        for (Partida p : partidas) {
-            if (rank.get(p.getJogador1().getNome()) == null) {
-                rank.put(p.getJogador1().getNome(), 0);
-            }
-            if (rank.get(p.getJogador2().getNome()) == null) {
-                rank.put(p.getJogador2().getNome(), 0);
-            }
-            if (rank.get(p.getVencedor()) == null) {
-                rank.put(p.getVencedor(), 1);
-            } else {
-                rank.put(p.getVencedor(), rank.get(p.getVencedor()) + 1);
-            }
-        }
-
-        return sortByValues(rank);
+            return sortByValues(rank);
+//        } catch (NullPointerException np) {
+//            System.out.println(np);
+//        }
+//        return rank;
     }
 
     private static HashMap sortByValues(HashMap map) {

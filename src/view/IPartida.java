@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.*;
 import javax.swing.*;
@@ -11,7 +10,6 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 import principal.Gomoku;
 import model.Configuracao;
-import model.Jogador;
 import model.Partida;
 import model.Pessoa;
 
@@ -57,6 +55,8 @@ public class IPartida extends JFrame{
     private JDialog sobreJDialog;
     private ISobre sobre = new ISobre();
     
+    private TimerTask tarefa;
+    
     public IPartida()
     {
         criarPartida();
@@ -73,6 +73,7 @@ public class IPartida extends JFrame{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(560, 650);
         frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
     }
 
     public void novaPartida(){
@@ -83,7 +84,7 @@ public class IPartida extends JFrame{
         placarJogador2JLabel.setText(c.getNome2());
         Gomoku.part = new Partida(new Pessoa(c.getNome1()), new Pessoa(c.getNome2()));
         Gomoku.part.setData(format.format(new Date().getTime()));
-        
+        iniciaCronometro();
         tabuleiro.getTabuleiro().setBackground(c.getCorTabuleiro());
         panelPlacar.setBackground(c.getCorPartida());
     }
@@ -174,6 +175,7 @@ public class IPartida extends JFrame{
                     if(timer!=null){
                         timer.cancel();
                     }
+                    System.exit(0);
                }
             } 
         ); 
@@ -256,7 +258,11 @@ public class IPartida extends JFrame{
     public void iniciaCronometro(){
         if (timer == null){      
             timer = new Timer();
-            TimerTask tarefa = new TimerTask() {     
+            if (tarefa != null) {
+                tarefa.cancel();
+                timer.purge();
+            }
+            tarefa = new TimerTask() {     
                 public void run(){      
                     try {     
                          String data = format.format(new Date().getTime());//pega a data atual
@@ -270,9 +276,11 @@ public class IPartida extends JFrame{
                          e.printStackTrace();      
                     }
                 }   
-            };      
+            };
             timer.scheduleAtFixedRate(tarefa, 0, 1000);      
-        }    
+        } else {
+            tempoInicio = System.currentTimeMillis();
+        }
     }
     public static void main(String[] args) {
         IPartida partida = new IPartida();
