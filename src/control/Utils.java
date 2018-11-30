@@ -33,6 +33,8 @@ public class Utils {
             System.exit(0);
         }
         Gomoku.partida.novaPartida();
+        Gomoku.partida.tabuleiro.getTabuleiro().repaint();
+        Gomoku.partida.tabuleiro.getTabuleiro().revalidate();
     }
     
     

@@ -9,8 +9,6 @@ import java.util.TimerTask;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import control.Gomoku;
-import static control.Gomoku.icone0;
-import static control.Gomoku.partida;
 import model.Configuracao;
 import model.Partida;
 import model.Pessoa;
@@ -35,7 +33,7 @@ public class IPartida extends JFrame{
     private JPanel panelPlacar;
 
     private JFrame frame = new JFrame("Gomoku");
-    private ITabuleiro tabuleiro = new ITabuleiro();
+    public ITabuleiro tabuleiro = new ITabuleiro();
 
     private JLabel placarJogador1JLabel;
     private JLabel placarJogador2JLabel;
@@ -228,6 +226,7 @@ public class IPartida extends JFrame{
                public void actionPerformed( ActionEvent event )
                {
                     criarRanking();
+                    ranking.preencherTabela();
                }
             } 
         ); 
