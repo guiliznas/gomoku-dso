@@ -156,9 +156,9 @@ public class IPartida extends JFrame{
             } 
         ); 
 
-        salvarJMenuItem = new JMenuItem( "Salvar" );
-        arquivoJMenu.add( salvarJMenuItem );
-        arquivoJMenu.addSeparator();
+//        salvarJMenuItem = new JMenuItem( "Salvar" );
+//        arquivoJMenu.add( salvarJMenuItem );
+//        arquivoJMenu.addSeparator();
 
         sairJMenuItem = new JMenuItem( "Sair" );
         arquivoJMenu.add( sairJMenuItem );
