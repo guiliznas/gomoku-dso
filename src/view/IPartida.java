@@ -41,7 +41,7 @@ public class IPartida extends JFrame{
     private long tempoInicio = System.currentTimeMillis();
 
     private Timer timer = null;      
-    private final SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+    private final SimpleDateFormat format = new SimpleDateFormat("dd/MM/YYYY");
 
     private JDialog rankingJDialog;
     private IRanking ranking = new IRanking();
