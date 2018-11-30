@@ -2,6 +2,7 @@ package control;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import model.Partida;
 import model.Tabuleiro;
 import view.IConfiguracoes;
@@ -52,6 +53,7 @@ public class Gomoku {
             } else {
                 if (verificaEmpate(tabuleiro.get())) {
                     System.out.println("Empatou!!");
+                    JOptionPane.showMessageDialog(null, "Empatou");
                 }
                 System.out.println("Não foi possivel jogar");
             }
@@ -72,7 +74,9 @@ public class Gomoku {
         }
     }
 
-    
+    public static void resetJogadorAtual(){
+        Gomoku.jogadorAtual = "Jogador1";
+    }
 
     public static boolean verificaEmpate(byte[][] tabuleiro) {
         boolean empate = true;

@@ -2,6 +2,8 @@ package control;
 
 import java.util.Random;
 import javax.swing.JOptionPane;
+import model.Configuracao;
+import view.IConfiguracoes;
 
 public class Utils {
     
@@ -54,8 +56,17 @@ public class Utils {
         contadorDiagonalSecundaria += verificaPosicoes(tabuleiro, i, j, VERIFICA_SECUNDARIA_BAIXO);
 
         if (contadorDiagonalSecundaria >= 4 || contadorDiagonalPrincipal >= 4 || contadorEsquerdaDireita >= 4 || contadorCimaBaixo >= 4) {//4 porque considera a propria peca 
-            System.out.println("Ganhou o Jogador" + tabuleiro[i][j]);
-            JOptionPane.showMessageDialog(null, "Ganhou o jogador " + tabuleiro[i][j]);
+            IConfiguracoes.config.load();
+            Configuracao c = IConfiguracoes.config;
+        
+            if(tabuleiro[i][j]==1){
+                JOptionPane.showMessageDialog(null, "Ganhou o jogador " + c.getNome1());
+                System.out.println("Ganhou o Jogador" + c.getNome1());
+            }else if(tabuleiro[i][j]==2){
+                JOptionPane.showMessageDialog(null, "Ganhou o jogador " + c.getNome2());
+                System.out.println("Ganhou o Jogador" + c.getNome2());
+            }
+            //JOptionPane.showMessageDialog(null, "Ganhou o jogador " + tabuleiro[i][j]);
             Serializer s = new Serializer();
             try {
                 Gomoku.part.setVencedor(tabuleiro[i][j] == 1 ? Gomoku.part.getJogador1().getNome() : Gomoku.part.getJogador2().getNome());
@@ -234,6 +245,7 @@ public class Utils {
             }
             empatou = Gomoku.verificaEmpate(tabuleiro);
             if (empatou) {
+                JOptionPane.showMessageDialog(null, "Empatou");
                 System.out.println("Empatou!");
             }
         }

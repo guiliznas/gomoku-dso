@@ -10,8 +10,10 @@ import java.util.Map;
 import javax.swing.*;
 import javax.swing.JSlider;
 import model.Configuracao;
+import model.Dificuldade;
 
 public class IConfiguracoes extends JDialog{
+    private static String[] dificuldades = {"FACIL", "MEDIO" , "DIFICIL"};
     private static String[] cores = {"Branco", "Azul" , "Verde", "Amarelo" , "Laranja", "Cinza","Vermelho","Rosa","Preto"};
     private static Map<String, Color> colors = new HashMap<>();
     private JDialog configuracoesJDialog;
@@ -23,7 +25,7 @@ public class IConfiguracoes extends JDialog{
     private JLabel corPartidaJLabel;
     private JTextField nome1JTextField;
     private JTextField nome2JTextField;
-    private JSlider nivelBotJSlider;
+    private JComboBox nivelBotJComboBox;
     private JComboBox corTabuleiroJComboBox;
     private JComboBox corPartidaJComboBox;
     private JButton cancelJButton;
@@ -72,17 +74,8 @@ public class IConfiguracoes extends JDialog{
         this.nome1JTextField.setBounds( 190, 60, 150, 20 ); //(x, y, width, height)
         this.nome2JTextField = new JTextField(config == null ? " " : config.getNome2());
         this.nome2JTextField.setBounds( 190, 100, 150, 20 ); //(x, y, width, height)
-        this.nivelBotJSlider = new JSlider(JSlider.HORIZONTAL, sMin, sMax, config == null ? sPos : config.getNivelBot().get());
-        Hashtable<Integer, JLabel> labels = new Hashtable<>();
-        labels.put(0, new JLabel("Dificil"));
-        labels.put(1, new JLabel("Médio"));
-        labels.put(2, new JLabel("Facil"));
-        this.nivelBotJSlider.setLabelTable(labels);
-        this.nivelBotJSlider.setMajorTickSpacing(1);
-        this.nivelBotJSlider.setMinorTickSpacing(1);
-        this.nivelBotJSlider.setPaintTicks(true);
-        this.nivelBotJSlider.setPaintLabels(true);
-        this.nivelBotJSlider.setBounds( 190, 140, 150, 50 ); //(x, y, width, height)
+        this.nivelBotJComboBox = new JComboBox(this.dificuldades);
+        this.nivelBotJComboBox.setBounds( 190, 150, 150, 20 ); //(x, y, width, height)
         this.corTabuleiroJComboBox = new JComboBox(this.cores);
         this.corTabuleiroJComboBox.setBounds( 190, 200, 150, 20 ); //(x, y, width, height)
         this.corPartidaJComboBox = new JComboBox(this.cores);
@@ -96,6 +89,15 @@ public class IConfiguracoes extends JDialog{
                 Configuracao c = new Configuracao();
                 c.setNome1(nome1JTextField.getText());
                 c.setNome2(nome2JTextField.getText());
+                Dificuldade nivel;
+                if(nivelBotJComboBox.getSelectedIndex()==0){
+                    nivel = Dificuldade.FACIL;
+                }else if(nivelBotJComboBox.getSelectedIndex()==1){
+                    nivel = Dificuldade.MEDIO;
+                }else{
+                    nivel = Dificuldade.DIFICIL;
+                }
+                c.setNivelBot(nivel);
                 c.setCorPartida(colors.get(corPartidaJComboBox.getSelectedItem()));
                 c.setCorTabuleiro(colors.get(corTabuleiroJComboBox.getSelectedItem()));
                 s.salvarConfiguracao(c);
@@ -108,7 +110,7 @@ public class IConfiguracoes extends JDialog{
         this.configuracoesJDialog.add(this.nome2JLabel);
         this.configuracoesJDialog.add(this.nome2JTextField);
         this.configuracoesJDialog.add(this.nivelBotJLabel);
-        this.configuracoesJDialog.add(this.nivelBotJSlider);
+        this.configuracoesJDialog.add(this.nivelBotJComboBox);
 
         this.configuracoesJDialog.add(this.corTabuleiroJLabel);
         this.configuracoesJDialog.add(this.corTabuleiroJComboBox);

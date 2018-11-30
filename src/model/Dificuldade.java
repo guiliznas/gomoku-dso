@@ -15,4 +15,8 @@ public enum Dificuldade {
         return nivel;
     }
     
+    public void set(int nivel){
+        this.nivel = nivel;
+    }
+    
 }

@@ -9,6 +9,8 @@ import java.util.TimerTask;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import control.Gomoku;
+import static control.Gomoku.icone0;
+import static control.Gomoku.partida;
 import model.Configuracao;
 import model.Partida;
 import model.Pessoa;
@@ -80,13 +82,23 @@ public class IPartida extends JFrame{
         Gomoku.tabuleiro.reset();
         IConfiguracoes.config.load();
         Configuracao c = IConfiguracoes.config;
-        placarJogador1JLabel.setText(c.getNome1());
-        placarJogador2JLabel.setText(c.getNome2());
+        placarJogador1JLabel.setText("Brancas  - "+c.getNome1()+"  |");
+        placarJogador2JLabel.setText("|   "+c.getNome2()+" -   Pretas");
         Gomoku.part = new Partida(new Pessoa(c.getNome1()), new Pessoa(c.getNome2()));
         Gomoku.part.setData(format.format(new Date().getTime()));
+        //iniciaCronometro();
+        
+        timer = null;
+        tempoInicio = System.currentTimeMillis();
         iniciaCronometro();
+      
+        
         tabuleiro.getTabuleiro().setBackground(c.getCorTabuleiro());
         panelPlacar.setBackground(c.getCorPartida());
+        
+        panelTabuleiro.setVisible(true);
+        panelTabuleiro.setFocusable(true);
+        
     }
     
     public void criarTabuleiro(){
@@ -99,7 +111,7 @@ public class IPartida extends JFrame{
         rankingJDialog = new JDialog(frame, true);
         rankingJDialog = ranking.getRanking();
         rankingJDialog.setSize(500, 300);
-        rankingJDialog.setLocation(30, 200);
+        rankingJDialog.setLocation(430, 200);
         rankingJDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         rankingJDialog.setVisible(true);
     }
@@ -108,7 +120,7 @@ public class IPartida extends JFrame{
         sobreJDialog = new JDialog(frame, true);
         sobreJDialog = sobre.getSobre();
         sobreJDialog.setSize(400, 400);
-        sobreJDialog.setLocation(80, 150);
+        sobreJDialog.setLocation(480, 150);
         sobreJDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         sobreJDialog.setVisible(true);
     }
@@ -117,7 +129,7 @@ public class IPartida extends JFrame{
         configuracoesJDialog = new JDialog(frame, true);
         configuracoesJDialog = configuracoes.getConfiguracoes();
         configuracoesJDialog.setSize(400, 400);
-        configuracoesJDialog.setLocation(80, 150);
+        configuracoesJDialog.setLocation(480, 150);
         configuracoesJDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         configuracoesJDialog.setVisible(true);
     }
@@ -126,7 +138,7 @@ public class IPartida extends JFrame{
         historicoJDialog = new JDialog(frame, true);
         historicoJDialog = historico.getHistorico();
         historicoJDialog.setSize(400, 400);
-        historicoJDialog.setLocation(80, 150);
+        historicoJDialog.setLocation(490, 150);
         historicoJDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         historicoJDialog.setVisible(true);
     }
