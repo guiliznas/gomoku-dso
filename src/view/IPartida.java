@@ -145,7 +145,7 @@ public class IPartida extends JFrame{
         barraJMenuBar = new JMenuBar();
         frame.setJMenuBar( barraJMenuBar);
 
-        arquivoJMenu = new JMenu( "Arquivo" );
+        arquivoJMenu = new JMenu( "Partida" );
         barraJMenuBar.add(arquivoJMenu);
        
         novoJMenuItem = new JMenuItem( "Novo" );
