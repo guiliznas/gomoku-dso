@@ -45,7 +45,7 @@ public class IConfiguracoes extends JDialog{
         colors.put("Cinza", Color.GRAY);
         colors.put("Vermelho", Color.RED);
         colors.put("Rosa", Color.PINK);
-        colors.put("Preto", Color.DARK_GRAY); // Ou preto mesmo?
+        colors.put("Preto", Color.DARK_GRAY); 
         config.load();
         System.out.println(config);
         adicionaComponentesConfiguracoes();

@@ -147,8 +147,6 @@ public class IPartida extends JFrame{
                public void actionPerformed( ActionEvent event )
                {
                     timer = null;
-//                    placarJogador1JLabel.setText("Jogador 1 : 0    ");
-//                    placarJogador2JLabel.setText("     Jogador 2 : 0 ");
                     placarJogador1JLabel.setText(IConfiguracoes.config.getNome1());
                     placarJogador2JLabel.setText(IConfiguracoes.config.getNome2());
                     tempoInicio = System.currentTimeMillis();

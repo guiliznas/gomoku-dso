@@ -1,6 +1,5 @@
 package control;
 
-import control.Utils;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import model.Partida;

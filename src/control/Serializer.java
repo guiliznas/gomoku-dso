@@ -129,12 +129,6 @@ public class Serializer {
                 config.setTamanhoTabuleiro(Integer.parseInt(configText.split(" - ")[3]));
                 config.setCorPartida(new Color(Integer.parseInt(configText.split(" - ")[4])));
                 config.setCorTabuleiro(new Color(Integer.parseInt(configText.split(" - ")[5])));
-//                config.setNome1(configI.next());
-//                config.setNome2(configI.next());
-//                config.setNivelBot(Dificuldade.valueOf(configI.next()));
-//                config.setCorTabuleiro();
-//                config.setCorPartida();
-//                config.setTamanhoTabuleiro(configI.nextInt());
             }
         } catch (NoSuchElementException elementException) {
             System.out.println(elementException);

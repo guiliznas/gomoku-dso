@@ -1,8 +1,5 @@
 package control;
 
-//import static control.Gomoku.gerador;
-//import static control.Gomoku.part;
-//import static control.Gomoku.verificaEmpate;
 import java.util.Random;
 import javax.swing.JOptionPane;
 
