@@ -8,7 +8,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Date;
 import java.text.SimpleDateFormat;
-import principal.Gomoku;
+import control.Gomoku;
 import model.Configuracao;
 import model.Partida;
 import model.Pessoa;

@@ -98,9 +98,6 @@ public class IConfiguracoes extends JDialog{
                 c.setNome2(nome2JTextField.getText());
                 c.setCorPartida(colors.get(corPartidaJComboBox.getSelectedItem()));
                 c.setCorTabuleiro(colors.get(corTabuleiroJComboBox.getSelectedItem()));
-//                System.out.println(Integer.toString(Color.WHITE.getRGB()));
-//                System.out.println(new Color(Integer.parseInt(Integer.toString(Color.WHITE.getRGB()))));
-//                c.setNivelBot(nivelBotJSlider.getLabelTable().get(nivelBotJSlider.getValue()));
                 s.salvarConfiguracao(c);
                 System.out.println("salvo");
             }

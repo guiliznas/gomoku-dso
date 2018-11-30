@@ -1,6 +1,6 @@
 package model;
 
-import principal.Gomoku;
+import control.Gomoku;
 
 public class Tabuleiro {
     byte[][] tabuleiro;

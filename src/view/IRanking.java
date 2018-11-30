@@ -2,10 +2,8 @@ package view;
 
 import javax.swing.*;
 import java.awt.GridLayout;
-import java.util.ArrayList;
 import java.util.Map;
 import model.Historico;
-import model.Partida;
 
 public class IRanking extends JDialog{
     private JDialog rankingJDialog;
@@ -28,13 +26,6 @@ public class IRanking extends JDialog{
     }
 
     public void preencherTabela() {
-//        this.dados[0][0]= "Posicao";
-//        this.dados[0][1]= "Nome";
-//        this.dados[0][2]= "Vitorias";
-//        this.dados[0][3]= "Vs.Pessoas";
-//        this.dados[0][4]= "Vs.Bots";
-//        this.dados[0][5]= "Duracao";
-    
         Historico h = new Historico();
         Map<String, Integer> rank = h.getRanking();
         

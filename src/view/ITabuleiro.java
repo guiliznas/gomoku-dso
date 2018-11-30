@@ -5,7 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import model.Tabuleiro;
-import principal.Gomoku;
+import control.Gomoku;
 
 public class ITabuleiro extends JPanel{
     private static final int TAMANHO_TABULEIRO = 15; //define a quantidade de colunas e linhas que terá o tabuleiro
