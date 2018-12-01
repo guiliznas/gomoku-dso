@@ -29,11 +29,6 @@ public class IHistorico extends JDialog{
         return this.historicoJDialog;
     }
     public void preencherTabela() {
-//        this.dados[0][0]= "Alfeu";
-//        this.dados[0][1]= "Guilherme";
-//        this.dados[0][2]= "Alfeu";
-//        this.dados[0][3]= "13/11/2018";
-
         Historico h = new Historico();
         ArrayList<Partida> historico = h.getHistorico();
         

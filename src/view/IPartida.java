@@ -8,6 +8,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import control.Gomoku;
+import model.Configuracao;
+import model.Partida;
+import model.Pessoa;
 
 public class IPartida extends JFrame{
     private JMenuBar barraJMenuBar;// barra de menu
@@ -29,7 +33,7 @@ public class IPartida extends JFrame{
     private JPanel panelPlacar;
 
     private JFrame frame = new JFrame("Gomoku");
-    private ITabuleiro tabuleiro = new ITabuleiro();
+    public ITabuleiro tabuleiro = new ITabuleiro();
 
     private JLabel placarJogador1JLabel;
     private JLabel placarJogador2JLabel;
@@ -37,13 +41,13 @@ public class IPartida extends JFrame{
     private long tempoInicio = System.currentTimeMillis();
 
     private Timer timer = null;      
-    private final SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+    private final SimpleDateFormat format = new SimpleDateFormat("dd/MM/YYYY");
 
     private JDialog rankingJDialog;
     private IRanking ranking = new IRanking();
 
     private JDialog configuracoesJDialog;
-    private IConfiguracoes configuracoes = new IConfiguracoes();
+    public IConfiguracoes configuracoes = new IConfiguracoes();
 
     private JDialog historicoJDialog;
     private IHistorico historico = new IHistorico();
@@ -51,9 +55,11 @@ public class IPartida extends JFrame{
     private JDialog sobreJDialog;
     private ISobre sobre = new ISobre();
     
+    private TimerTask tarefa;
+    
     public IPartida()
     {
-        criarPartida(); 
+        criarPartida();
     }
 
     public void criarPartida() {
@@ -67,8 +73,32 @@ public class IPartida extends JFrame{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(560, 650);
         frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
     }
 
+    public void novaPartida(){
+        Gomoku.tabuleiro.reset();
+        IConfiguracoes.config.load();
+        Configuracao c = IConfiguracoes.config;
+        placarJogador1JLabel.setText("Brancas  - "+c.getNome1()+"  |");
+        placarJogador2JLabel.setText("|   "+c.getNome2()+" -   Pretas");
+        Gomoku.part = new Partida(new Pessoa(c.getNome1()), new Pessoa(c.getNome2()));
+        Gomoku.part.setData(format.format(new Date().getTime()));
+        //iniciaCronometro();
+        
+        timer = null;
+        tempoInicio = System.currentTimeMillis();
+        iniciaCronometro();
+      
+        
+        tabuleiro.getTabuleiro().setBackground(c.getCorTabuleiro());
+        panelPlacar.setBackground(c.getCorPartida());
+        
+        panelTabuleiro.setVisible(true);
+        panelTabuleiro.setFocusable(true);
+        
+    }
+    
     public void criarTabuleiro(){
         panelTabuleiro = tabuleiro.getTabuleiro();
         panelTabuleiro.setBounds( 20, 50, 500, 500 ); //(x, y, width, height)
@@ -79,7 +109,7 @@ public class IPartida extends JFrame{
         rankingJDialog = new JDialog(frame, true);
         rankingJDialog = ranking.getRanking();
         rankingJDialog.setSize(500, 300);
-        rankingJDialog.setLocation(30, 200);
+        rankingJDialog.setLocation(430, 200);
         rankingJDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         rankingJDialog.setVisible(true);
     }
@@ -88,7 +118,7 @@ public class IPartida extends JFrame{
         sobreJDialog = new JDialog(frame, true);
         sobreJDialog = sobre.getSobre();
         sobreJDialog.setSize(400, 400);
-        sobreJDialog.setLocation(80, 150);
+        sobreJDialog.setLocation(480, 150);
         sobreJDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         sobreJDialog.setVisible(true);
     }
@@ -97,7 +127,7 @@ public class IPartida extends JFrame{
         configuracoesJDialog = new JDialog(frame, true);
         configuracoesJDialog = configuracoes.getConfiguracoes();
         configuracoesJDialog.setSize(400, 400);
-        configuracoesJDialog.setLocation(80, 150);
+        configuracoesJDialog.setLocation(480, 150);
         configuracoesJDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         configuracoesJDialog.setVisible(true);
     }
@@ -106,7 +136,7 @@ public class IPartida extends JFrame{
         historicoJDialog = new JDialog(frame, true);
         historicoJDialog = historico.getHistorico();
         historicoJDialog.setSize(400, 400);
-        historicoJDialog.setLocation(80, 150);
+        historicoJDialog.setLocation(490, 150);
         historicoJDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         historicoJDialog.setVisible(true);
     }
@@ -115,7 +145,7 @@ public class IPartida extends JFrame{
         barraJMenuBar = new JMenuBar();
         frame.setJMenuBar( barraJMenuBar);
 
-        arquivoJMenu = new JMenu( "Arquivo" );
+        arquivoJMenu = new JMenu( "Partida" );
         barraJMenuBar.add(arquivoJMenu);
        
         novoJMenuItem = new JMenuItem( "Novo" );
@@ -127,17 +157,18 @@ public class IPartida extends JFrame{
                public void actionPerformed( ActionEvent event )
                {
                     timer = null;
-                    placarJogador1JLabel.setText("Jogador 1 : 0    ");
-                    placarJogador2JLabel.setText("     Jogador 2 : 0 ");
+                    placarJogador1JLabel.setText(IConfiguracoes.config.getNome1());
+                    placarJogador2JLabel.setText(IConfiguracoes.config.getNome2());
                     tempoInicio = System.currentTimeMillis();
                     iniciaCronometro();
+                    novaPartida();
                }
             } 
         ); 
 
-        salvarJMenuItem = new JMenuItem( "Salvar" );
-        arquivoJMenu.add( salvarJMenuItem );
-        arquivoJMenu.addSeparator();
+//        salvarJMenuItem = new JMenuItem( "Salvar" );
+//        arquivoJMenu.add( salvarJMenuItem );
+//        arquivoJMenu.addSeparator();
 
         sairJMenuItem = new JMenuItem( "Sair" );
         arquivoJMenu.add( sairJMenuItem );
@@ -152,6 +183,7 @@ public class IPartida extends JFrame{
                     if(timer!=null){
                         timer.cancel();
                     }
+                    System.exit(0);
                }
             } 
         ); 
@@ -181,6 +213,7 @@ public class IPartida extends JFrame{
                public void actionPerformed( ActionEvent event )
                {
                     criarHistorico();
+                    historico.preencherTabela();
                }
             } 
         ); 
@@ -193,6 +226,7 @@ public class IPartida extends JFrame{
                public void actionPerformed( ActionEvent event )
                {
                     criarRanking();
+                    ranking.preencherTabela();
                }
             } 
         ); 
@@ -232,21 +266,30 @@ public class IPartida extends JFrame{
 
     public void iniciaCronometro(){
         if (timer == null){      
-            timer = new Timer();  
-            TimerTask tarefa = new TimerTask() {     
+            timer = new Timer();
+            if (tarefa != null) {
+                tarefa.cancel();
+                timer.purge();
+            }
+            tarefa = new TimerTask() {     
                 public void run(){      
                     try {     
                          String data = format.format(new Date().getTime());//pega a data atual
                          long diferenca=((System.currentTimeMillis() - tempoInicio)/ 1000);//armazena a diferença entre o inicio da exucação do programa e o tempo atual
-                         tempoJogoJLabel.setText("Tempo: "+diferenca );  
+                         tempoJogoJLabel.setText("Tempo: "+diferenca );
+                         if (Gomoku.part != null) {
+                            Gomoku.part.setDuracao(diferenca);
+                         }
                          //System.out.println(data + "  " + diferenca);  descomente isso se quiser testar
                     } catch (Exception e) {      
                          e.printStackTrace();      
                     }
                 }   
-            };      
+            };
             timer.scheduleAtFixedRate(tarefa, 0, 1000);      
-        }    
+        } else {
+            tempoInicio = System.currentTimeMillis();
+        }
     }
     public static void main(String[] args) {
         IPartida partida = new IPartida();

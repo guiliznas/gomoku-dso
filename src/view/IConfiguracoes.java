@@ -1,11 +1,21 @@
 package view;
 
+import control.Serializer;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Map;
 import javax.swing.*;
 import javax.swing.JSlider;
+import model.Configuracao;
+import model.Dificuldade;
 
 public class IConfiguracoes extends JDialog{
+    private static String[] dificuldades = {"FACIL", "MEDIO" , "DIFICIL"};
     private static String[] cores = {"Branco", "Azul" , "Verde", "Amarelo" , "Laranja", "Cinza","Vermelho","Rosa","Preto"};
-    
+    private static Map<String, Color> colors = new HashMap<>();
     private JDialog configuracoesJDialog;
 
     private JLabel nome1JLabel;
@@ -15,19 +25,32 @@ public class IConfiguracoes extends JDialog{
     private JLabel corPartidaJLabel;
     private JTextField nome1JTextField;
     private JTextField nome2JTextField;
-    private JSlider nivelBotJSlider;
+    private JComboBox nivelBotJComboBox;
     private JComboBox corTabuleiroJComboBox;
     private JComboBox corPartidaJComboBox;
     private JButton cancelJButton;
     private JButton okJButton;
 
-    private int sMin = 1;
-    private int sMax = 3;
+    private int sMin = 0;
+    private int sMax = 2;
     private int sPos = 1;
 
+    public static Configuracao config = new Configuracao();
+    
     public IConfiguracoes()
     {
-        adicionaComponentesConfiguracoes(); 
+        colors.put("Branco", Color.WHITE);
+        colors.put("Azul", Color.BLUE);
+        colors.put("Verde", Color.GREEN);
+        colors.put("Amarelo", Color.YELLOW);
+        colors.put("Laranja", Color.ORANGE);
+        colors.put("Cinza", Color.GRAY);
+        colors.put("Vermelho", Color.RED);
+        colors.put("Rosa", Color.PINK);
+        colors.put("Preto", Color.DARK_GRAY); 
+        config.load();
+        System.out.println(config);
+        adicionaComponentesConfiguracoes();
     }
     public void adicionaComponentesConfiguracoes() {
         this.configuracoesJDialog = new JDialog();
@@ -47,29 +70,47 @@ public class IConfiguracoes extends JDialog{
         this.cancelJButton = new JButton("Cancelar");
         this.cancelJButton.setBounds( 90, 300, 100, 20 ); //(x, y, width, height)
 
-        this.nome1JTextField = new JTextField(" ");
+        this.nome1JTextField = new JTextField(config == null ? " " : config.getNome1());
         this.nome1JTextField.setBounds( 190, 60, 150, 20 ); //(x, y, width, height)
-        this.nome2JTextField = new JTextField(" ");
+        this.nome2JTextField = new JTextField(config == null ? " " : config.getNome2());
         this.nome2JTextField.setBounds( 190, 100, 150, 20 ); //(x, y, width, height)
-        this.nivelBotJSlider = new JSlider(JSlider.HORIZONTAL, sMin, sMax, sPos); 
-        this.nivelBotJSlider.setMajorTickSpacing(1);
-        this.nivelBotJSlider.setMinorTickSpacing(1);
-        this.nivelBotJSlider.setPaintTicks(true);
-        this.nivelBotJSlider.setPaintLabels(true);
-        this.nivelBotJSlider.setBounds( 190, 140, 150, 50 ); //(x, y, width, height)
+        this.nivelBotJComboBox = new JComboBox(this.dificuldades);
+        this.nivelBotJComboBox.setBounds( 190, 150, 150, 20 ); //(x, y, width, height)
         this.corTabuleiroJComboBox = new JComboBox(this.cores);
         this.corTabuleiroJComboBox.setBounds( 190, 200, 150, 20 ); //(x, y, width, height)
         this.corPartidaJComboBox = new JComboBox(this.cores);
         this.corPartidaJComboBox.setBounds( 190, 240, 150, 20 ); //(x, y, width, height)
         this.okJButton = new JButton("OK");
         this.okJButton.setBounds( 200, 300, 100, 20 ); //(x, y, width, height)
+        this.okJButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                Serializer s = new Serializer();
+                Configuracao c = new Configuracao();
+                c.setNome1(nome1JTextField.getText());
+                c.setNome2(nome2JTextField.getText());
+                Dificuldade nivel;
+                if(nivelBotJComboBox.getSelectedIndex()==0){
+                    nivel = Dificuldade.FACIL;
+                }else if(nivelBotJComboBox.getSelectedIndex()==1){
+                    nivel = Dificuldade.MEDIO;
+                }else{
+                    nivel = Dificuldade.DIFICIL;
+                }
+                c.setNivelBot(nivel);
+                c.setCorPartida(colors.get(corPartidaJComboBox.getSelectedItem()));
+                c.setCorTabuleiro(colors.get(corTabuleiroJComboBox.getSelectedItem()));
+                s.salvarConfiguracao(c);
+                System.out.println("salvo");
+            }
+        });
 
         this.configuracoesJDialog.add(this.nome1JLabel);
         this.configuracoesJDialog.add(this.nome1JTextField);
         this.configuracoesJDialog.add(this.nome2JLabel);
         this.configuracoesJDialog.add(this.nome2JTextField);
         this.configuracoesJDialog.add(this.nivelBotJLabel);
-        this.configuracoesJDialog.add(this.nivelBotJSlider);
+        this.configuracoesJDialog.add(this.nivelBotJComboBox);
 
         this.configuracoesJDialog.add(this.corTabuleiroJLabel);
         this.configuracoesJDialog.add(this.corTabuleiroJComboBox);

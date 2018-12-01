@@ -14,7 +14,7 @@ public class ISobre extends JDialog{
 
     private JDialog sobreJDialog;
     
-    Icon icon = new ImageIcon("sobre.gif");
+    Icon icon = new ImageIcon(getClass().getResource("/sobre.gif"));
     JLabel gifJLabel = new JLabel(icon);
 
     public ISobre()
@@ -38,7 +38,7 @@ public class ISobre extends JDialog{
         this.autor2JLabel.setFont(new Font("Serif", Font.PLAIN, 20));
         this.autor2JLabel.setHorizontalAlignment(JLabel.CENTER);
 
-        this.autor3JLabel = new JLabel( "Joao Brognolli");
+        this.autor3JLabel = new JLabel( "Joao Brognoli");
         this.autor3JLabel.setFont(new Font("Serif", Font.PLAIN, 20));
         this.autor3JLabel.setHorizontalAlignment(JLabel.CENTER);
 
