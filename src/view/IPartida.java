@@ -44,13 +44,13 @@ public class IPartida extends JFrame{
     private final SimpleDateFormat format = new SimpleDateFormat("dd/MM/YYYY");
 
     private JDialog rankingJDialog;
-    private IRanking ranking; //= new IRanking();
+    private IRanking ranking = new IRanking();
 
     private JDialog configuracoesJDialog;
     public IConfiguracoes configuracoes = new IConfiguracoes();
 
     private JDialog historicoJDialog;
-    private IHistorico historico; //= new IHistorico();
+    private IHistorico historico = new IHistorico();
 
     private JDialog sobreJDialog;
     private ISobre sobre = new ISobre();
@@ -80,15 +80,11 @@ public class IPartida extends JFrame{
         Gomoku.tabuleiro.reset();
         IConfiguracoes.config.load();
         Configuracao c = IConfiguracoes.config;
-//        placarJogador1JLabel.setText("Brancas  - "+c.getNome1()+"  |");
-//        placarJogador2JLabel.setText("|   "+c.getNome2()+" -   Pretas");
         Gomoku.part = new Partida(new Pessoa(c.getNome1()), new Pessoa(c.getNome2()));
         Gomoku.part.setData(format.format(new Date().getTime()));
-        //iniciaCronometro();
         
         timer = null;
         tempoInicio = System.currentTimeMillis();
-//        iniciaCronometro();
       
         
         tabuleiro.getTabuleiro().setBackground(c.getCorTabuleiro());
@@ -214,9 +210,9 @@ public class IPartida extends JFrame{
             {
                public void actionPerformed( ActionEvent event )
                {
-//                    criarHistorico();
-//                    historico.preencherTabela();
-                   JOptionPane.showMessageDialog(null, "Abrir historico");
+                    criarHistorico();
+                    historico.preencherTabela();
+//                   JOptionPane.showMessageDialog(null, "Abrir historico");
                }
             } 
         ); 
@@ -228,9 +224,9 @@ public class IPartida extends JFrame{
             {
                public void actionPerformed( ActionEvent event )
                {
-//                    criarRanking();
-//                    ranking.preencherTabela();
-                   JOptionPane.showMessageDialog(null, "Abrir ranking");
+                    criarRanking();
+                    ranking.preencherTabela();
+//                   JOptionPane.showMessageDialog(null, "Abrir ranking");
                }
             } 
         ); 

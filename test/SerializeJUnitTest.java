@@ -2,7 +2,6 @@ import control.Serializer;
 import java.awt.Color;
 import java.util.ArrayList;
 import model.Configuracao;
-import model.Dificuldade;
 import model.Partida;
 import model.Pessoa;
 import org.junit.Test;
@@ -30,10 +29,10 @@ public class SerializeJUnitTest {
         System.out.println(pList);
     }
 
-    @Test
-    public void teste(){
-        System.out.println(Dificuldade.valueOf("FACIL"));
-    }
+//    @Test
+//    public void teste(){
+//        System.out.println(Dificuldade.valueOf("FACIL"));
+//    }
     
     @Test
     public void configuracao(){

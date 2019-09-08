@@ -5,7 +5,6 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import model.Partida;
 import model.Tabuleiro;
-import view.IConfiguracoes;
 import view.IPartida;
 
 public class Gomoku {
@@ -42,15 +41,11 @@ public class Gomoku {
     }
 
     public static void jogada(int i, int j) {
-        if (jogadorAtual == "Jogador1" || roboJogando == false) {
+        if (jogadorAtual == "Jogador1") {
             System.out.println("Jogada de: " + jogadorAtual);
             if (tabuleiro.getPosicao(i, j) == 0) {
                 tabuleiro.get()[i][j] = jogadorAtual == "Jogador1" ? (byte) 1 : (byte) 2; //operador ternário
-//                matrizBotoes[i][j].setIcon(jogadorAtual == "Jogador1" ? icone1 : icone2);
                 matrizBotoes[i][j].setIcon(icone1);
-                jogadorAtual = jogadorAtual == "Jogador1" ? "Jogador2" : "Jogador1";
-
-                Utils.verificaGanhador(tabuleiro.get(), i, j);
             } else {
                 if (verificaEmpate(tabuleiro.get())) {
                     System.out.println("Empatou!!");
@@ -59,17 +54,6 @@ public class Gomoku {
                 System.out.println("Não foi possivel jogar");
             }
         }
-
-        if (roboJogando && jogadorAtual == "Jogador2") { //robo jogando
-            System.out.println("Jogada de: " + jogadorAtual);
-            int[] linhaColuna = Utils.jogadaRobo(tabuleiro.get(), i, j, IConfiguracoes.config.getNivelBot().get());//ultimo argumento é o nivel de dificuldade
-            //0 é dificil - 1 é médio - 2 é facil
-            tabuleiro.get()[linhaColuna[0]][linhaColuna[1]] = 2;
-            matrizBotoes[linhaColuna[0]][linhaColuna[1]].setIcon(icone2);
-            Utils.verificaGanhador(tabuleiro.get(), linhaColuna[0], linhaColuna[1]);
-            jogadorAtual = "Jogador1";//depois da jogada do robo passa a jogada pro player
-        }
-
         if (part.getVencedor() != null) {
             Utils.questComecarNova();
         }
@@ -80,15 +64,7 @@ public class Gomoku {
     }
 
     public static boolean verificaEmpate(byte[][] tabuleiro) {
-        boolean empate = true;
-        for (int i = 0; i < 15; i++) { //varre o tabuleiro buscando alguma posição vazia pra jogar
-            for (int j = 0; j < 15; j++) {//caso estejam todas ocupadas é porque empatou
-                if (tabuleiro[i][j] == 0) {
-                    empate = false;
-                }
-            }
-        }
-        return empate;
+        return false;
     }
 
     
