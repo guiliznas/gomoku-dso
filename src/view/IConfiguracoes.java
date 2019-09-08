@@ -82,26 +82,28 @@ public class IConfiguracoes extends JDialog{
         this.corPartidaJComboBox.setBounds( 190, 240, 150, 20 ); //(x, y, width, height)
         this.okJButton = new JButton("OK");
         this.okJButton.setBounds( 200, 300, 100, 20 ); //(x, y, width, height)
+        JDialog jd = this;
         this.okJButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                Serializer s = new Serializer();
-                Configuracao c = new Configuracao();
-                c.setNome1(nome1JTextField.getText());
-                c.setNome2(nome2JTextField.getText());
-                Dificuldade nivel;
-                if(nivelBotJComboBox.getSelectedIndex()==0){
-                    nivel = Dificuldade.FACIL;
-                }else if(nivelBotJComboBox.getSelectedIndex()==1){
-                    nivel = Dificuldade.MEDIO;
-                }else{
-                    nivel = Dificuldade.DIFICIL;
-                }
-                c.setNivelBot(nivel);
-                c.setCorPartida(colors.get(corPartidaJComboBox.getSelectedItem()));
-                c.setCorTabuleiro(colors.get(corTabuleiroJComboBox.getSelectedItem()));
-                s.salvarConfiguracao(c);
-                System.out.println("salvo");
+//                Serializer s = new Serializer();
+//                Configuracao c = new Configuracao();
+//                c.setNome1(nome1JTextField.getText());
+//                c.setNome2(nome2JTextField.getText());
+//                Dificuldade nivel;
+//                if(nivelBotJComboBox.getSelectedIndex()==0){
+//                    nivel = Dificuldade.FACIL;
+//                }else if(nivelBotJComboBox.getSelectedIndex()==1){
+//                    nivel = Dificuldade.MEDIO;
+//                }else{
+//                    nivel = Dificuldade.DIFICIL;
+//                }
+//                c.setNivelBot(nivel);
+//                c.setCorPartida(colors.get(corPartidaJComboBox.getSelectedItem()));
+//                c.setCorTabuleiro(colors.get(corTabuleiroJComboBox.getSelectedItem()));
+//                s.salvarConfiguracao(c);
+//                System.out.println("salvo");
+                jd.dispose();
             }
         });
 

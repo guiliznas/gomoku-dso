@@ -46,7 +46,8 @@ public class Gomoku {
             System.out.println("Jogada de: " + jogadorAtual);
             if (tabuleiro.getPosicao(i, j) == 0) {
                 tabuleiro.get()[i][j] = jogadorAtual == "Jogador1" ? (byte) 1 : (byte) 2; //operador ternário
-                matrizBotoes[i][j].setIcon(jogadorAtual == "Jogador1" ? icone1 : icone2);
+//                matrizBotoes[i][j].setIcon(jogadorAtual == "Jogador1" ? icone1 : icone2);
+                matrizBotoes[i][j].setIcon(icone1);
                 jogadorAtual = jogadorAtual == "Jogador1" ? "Jogador2" : "Jogador1";
 
                 Utils.verificaGanhador(tabuleiro.get(), i, j);

@@ -44,13 +44,13 @@ public class IPartida extends JFrame{
     private final SimpleDateFormat format = new SimpleDateFormat("dd/MM/YYYY");
 
     private JDialog rankingJDialog;
-    private IRanking ranking = new IRanking();
+    private IRanking ranking; //= new IRanking();
 
     private JDialog configuracoesJDialog;
     public IConfiguracoes configuracoes = new IConfiguracoes();
 
     private JDialog historicoJDialog;
-    private IHistorico historico = new IHistorico();
+    private IHistorico historico; //= new IHistorico();
 
     private JDialog sobreJDialog;
     private ISobre sobre = new ISobre();
@@ -80,15 +80,15 @@ public class IPartida extends JFrame{
         Gomoku.tabuleiro.reset();
         IConfiguracoes.config.load();
         Configuracao c = IConfiguracoes.config;
-        placarJogador1JLabel.setText("Brancas  - "+c.getNome1()+"  |");
-        placarJogador2JLabel.setText("|   "+c.getNome2()+" -   Pretas");
+//        placarJogador1JLabel.setText("Brancas  - "+c.getNome1()+"  |");
+//        placarJogador2JLabel.setText("|   "+c.getNome2()+" -   Pretas");
         Gomoku.part = new Partida(new Pessoa(c.getNome1()), new Pessoa(c.getNome2()));
         Gomoku.part.setData(format.format(new Date().getTime()));
         //iniciaCronometro();
         
         timer = null;
         tempoInicio = System.currentTimeMillis();
-        iniciaCronometro();
+//        iniciaCronometro();
       
         
         tabuleiro.getTabuleiro().setBackground(c.getCorTabuleiro());
@@ -156,12 +156,13 @@ public class IPartida extends JFrame{
             {
                public void actionPerformed( ActionEvent event )
                {
-                    timer = null;
-                    placarJogador1JLabel.setText(IConfiguracoes.config.getNome1());
-                    placarJogador2JLabel.setText(IConfiguracoes.config.getNome2());
-                    tempoInicio = System.currentTimeMillis();
-                    iniciaCronometro();
-                    novaPartida();
+//                    timer = null;
+//                    placarJogador1JLabel.setText(IConfiguracoes.config.getNome1());
+//                    placarJogador2JLabel.setText(IConfiguracoes.config.getNome2());
+//                    tempoInicio = System.currentTimeMillis();
+//                    iniciaCronometro();
+//                    novaPartida();
+                   JOptionPane.showMessageDialog(null, "Começar nova partida");
                }
             } 
         ); 
@@ -200,6 +201,7 @@ public class IPartida extends JFrame{
                public void actionPerformed( ActionEvent event )
                {
                     criarConfiguracoes();
+//                   JOptionPane.showMessageDialog(null, "Abrir configurações");
                }
             } 
         ); 
@@ -212,8 +214,9 @@ public class IPartida extends JFrame{
             {
                public void actionPerformed( ActionEvent event )
                {
-                    criarHistorico();
-                    historico.preencherTabela();
+//                    criarHistorico();
+//                    historico.preencherTabela();
+                   JOptionPane.showMessageDialog(null, "Abrir historico");
                }
             } 
         ); 
@@ -225,8 +228,9 @@ public class IPartida extends JFrame{
             {
                public void actionPerformed( ActionEvent event )
                {
-                    criarRanking();
-                    ranking.preencherTabela();
+//                    criarRanking();
+//                    ranking.preencherTabela();
+                   JOptionPane.showMessageDialog(null, "Abrir ranking");
                }
             } 
         ); 
