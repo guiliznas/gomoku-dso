@@ -30,10 +30,10 @@ public class Gomoku {
         Gomoku.icone0 = new ImageIcon(getClass().getResource("/000.png"));
         for (int i = 0; i < 15; i++) {
             for (int j = 0; j < 15; j++) {
-                matrizBotoes[i][j].setOpaque(false);
-                matrizBotoes[i][j].setContentAreaFilled(false);
-                matrizBotoes[i][j].setBorderPainted(false);
-                matrizBotoes[i][j].setIcon(icone0);
+//                matrizBotoes[i][j].setOpaque(false);
+//                matrizBotoes[i][j].setContentAreaFilled(false);
+//                matrizBotoes[i][j].setBorderPainted(false);
+//                matrizBotoes[i][j].setIcon(icone0);
             }
         }
         System.out.println(partida.configuracoes);

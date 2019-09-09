@@ -29,10 +29,10 @@ public class Tabuleiro {
         for (int i = 0; i < 15; i++) {
             for (int j = 0; j < 15; j++) {
                 tabuleiro[i][j] = 0;
-                Gomoku.matrizBotoes[i][j].setOpaque(false);
-                Gomoku.matrizBotoes[i][j].setContentAreaFilled(false);
-                Gomoku.matrizBotoes[i][j].setBorderPainted(false);
-                Gomoku.matrizBotoes[i][j].setIcon(icone0);
+//                Gomoku.matrizBotoes[i][j].setOpaque(false);
+//                Gomoku.matrizBotoes[i][j].setContentAreaFilled(false);
+//                Gomoku.matrizBotoes[i][j].setBorderPainted(false);
+//                Gomoku.matrizBotoes[i][j].setIcon(icone0);
             }
         }
         
