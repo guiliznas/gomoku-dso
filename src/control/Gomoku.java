@@ -19,11 +19,16 @@ public class Gomoku {
     public static ImageIcon icone2;
     public static ImageIcon icone0;
 
-    public static boolean roboJogando = false;    
+    public static boolean roboJogando = false;
 
     public static Partida part;
 
+    public static Servidor ngServer;
+    public static boolean conectado = false;
+    public static boolean partidaAndamento = false;
+
     public Gomoku() {
+        ngServer = new Servidor();
         partida = new IPartida();
         Gomoku.icone1 = new ImageIcon(getClass().getResource("/001_.png"));
         Gomoku.icone2 = new ImageIcon(getClass().getResource("/002_.png"));
@@ -59,7 +64,7 @@ public class Gomoku {
         }
     }
 
-    public static void resetJogadorAtual(){
+    public static void resetJogadorAtual() {
         Gomoku.jogadorAtual = "Jogador1";
     }
 
@@ -67,5 +72,37 @@ public class Gomoku {
         return false;
     }
 
-    
+    // Netgames
+    public static String conectar(String string, String string2) {
+        String mensagem = "Não foi possível iniciar"; // Definir condições
+        boolean permitido = true;
+        if (permitido) {
+            mensagem = ngServer.conectar(string, string2);
+            if (mensagem.equals("Conectado com sucesso!")) {
+                conectado = true;
+            }
+        }
+        return mensagem;
+    }
+
+    public static String desconectar() {
+        String mensagem = "Não foi possível desconectar"; // Definir condições
+        boolean permitido = true;
+        if (permitido) {
+            mensagem = ngServer.desconectar();
+            if (mensagem.equals("Desconectado com sucesso!")) {
+                conectado = false;
+            }
+        }
+        return mensagem;
+    }
+
+    public static String iniciarPartida() {
+        String mensagem = "Não foi possível iniciar"; // Definir condições
+        boolean permitido = true;
+        if (permitido) {
+            mensagem = ngServer.iniciarPartida();
+        }
+        return mensagem;
+    }
 }
