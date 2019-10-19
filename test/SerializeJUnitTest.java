@@ -3,7 +3,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import model.Configuracao;
 import model.Partida;
-import model.Pessoa;
+import model.Jogador;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -13,15 +13,15 @@ public class SerializeJUnitTest {
     public void partidas(){
         ArrayList<Partida> partidas = new ArrayList<>();
         Serializer s = new Serializer();
-        Partida p = new Partida(new Pessoa("Teste1"), new Pessoa("Teste2"));
+        Partida p = new Partida(new Jogador("Teste1"), new Jogador("Teste2"));
         p.setVencedor("Teste1");
         partidas.add(p);
 //        s.addPartida(p);
-        p = new Partida(new Pessoa("Teste1"), new Pessoa("Teste2"));
+        p = new Partida(new Jogador("Teste1"), new Jogador("Teste2"));
         p.setVencedor("Teste1");
         partidas.add(p);
 //        s.addPartida(p);
-        p = new Partida(new Pessoa("Teste1"), new Pessoa("Teste2"));
+        p = new Partida(new Jogador("Teste1"), new Jogador("Teste2"));
         p.setVencedor("Teste2");
         partidas.add(p);
 //        s.addPartida(p);

@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
 import control.Gomoku;
 import model.Configuracao;
 import model.Partida;
-import model.Pessoa;
+import model.Jogador;
 
 public class IPartida extends JFrame {
 
@@ -85,7 +85,7 @@ public class IPartida extends JFrame {
         Gomoku.tabuleiro.reset();
         IConfiguracoes.config.load();
         Configuracao c = IConfiguracoes.config;
-        Gomoku.part = new Partida(new Pessoa(c.getNome1()), new Pessoa(c.getNome2()));
+        Gomoku.part = new Partida(new Jogador(c.getNome1()), new Jogador(c.getNome2()));
         Gomoku.part.setData(format.format(new Date().getTime()));
 
         timer = null;
