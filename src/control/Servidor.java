@@ -6,8 +6,12 @@ import br.ufsc.inf.leobr.cliente.Proxy;
 import br.ufsc.inf.leobr.cliente.exception.ArquivoMultiplayerException;
 import br.ufsc.inf.leobr.cliente.exception.JahConectadoException;
 import br.ufsc.inf.leobr.cliente.exception.NaoConectadoException;
+import br.ufsc.inf.leobr.cliente.exception.NaoJogandoException;
 import br.ufsc.inf.leobr.cliente.exception.NaoPossivelConectarException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.Lance;
 
 /**
  * @author(name= Guilherme de Liz, date= 19/10/2019)
@@ -54,17 +58,27 @@ public class Servidor implements OuvidorProxy {
 
     public String iniciarPartida() {
         try {
-            proxy.iniciarPartida(new Integer(1));
+            proxy.iniciarPartida(new Integer(2));
         } catch (NaoConectadoException e) {
             e.printStackTrace();
             return "Erro ao tentar iniciar partida";
         }
         return "Solicitação de inicio enviada";
     }
+    
+    public String realizarJogada(int x, int y) {
+        try {
+            proxy.enviaJogada(new Lance(x, y, Gomoku.jogadorAtual));
+        } catch (NaoJogandoException ex) {
+            Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "Jogada feita";
+    }
 
     @Override
     public void iniciarNovaPartida(Integer posicao) {
-        JOptionPane.showMessageDialog(null, "Solicitação de inicio recebida");
+        JOptionPane.showMessageDialog(null, "Solicitação de inicio recebida " + posicao);
+        Gomoku.partidaAndamento = true;
     }
 
     @Override
@@ -79,6 +93,7 @@ public class Servidor implements OuvidorProxy {
 
     @Override
     public void receberJogada(Jogada jogada) {
+        Gomoku.mudarPosicao((Lance) jogada);
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

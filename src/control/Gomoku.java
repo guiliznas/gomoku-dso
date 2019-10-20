@@ -3,6 +3,7 @@ package control;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import model.Lance;
 import model.Partida;
 import model.Tabuleiro;
 import view.IPartida;
@@ -10,7 +11,7 @@ import view.IPartida;
 public class Gomoku {
 
     public static IPartida partida;
-    private static String jogadorAtual = "Jogador1";
+    public static String jogadorAtual = "Jogador1";
 
     public static Tabuleiro tabuleiro = new Tabuleiro(15);
     public static JButton[][] matrizBotoes = new JButton[15][15];
@@ -49,6 +50,9 @@ public class Gomoku {
         if (jogadorAtual == "Jogador1") {
             System.out.println("Jogada de: " + jogadorAtual);
             if (tabuleiro.getPosicao(i, j) == 0) {
+                if (partidaAndamento) {
+                    ngServer.realizarJogada(i, j);
+                }
                 tabuleiro.get()[i][j] = jogadorAtual == "Jogador1" ? (byte) 1 : (byte) 2; //operador ternário
                 matrizBotoes[i][j].setIcon(icone1);
             } else {
@@ -62,6 +66,11 @@ public class Gomoku {
         if (part.getVencedor() != null) {
             Utils.questComecarNova();
         }
+    }
+
+    public static void mudarPosicao(Lance jogada) {
+        tabuleiro.get()[jogada.getLinha()][jogada.getColuna()] = jogada.getJogador() == "Jogador1" ? (byte) 1 : (byte) 2; //operador ternário
+        matrizBotoes[jogada.getLinha()][jogada.getColuna()].setIcon(icone1);
     }
 
     public static void resetJogadorAtual() {
