@@ -6,7 +6,7 @@ import model.Configuracao;
 import view.IConfiguracoes;
 
 public class Utils {
-    
+
     public static final int VERIFICA_PRA_CIMA = 0;
     public static final int VERIFICA_PRA_BAIXO = 1;
     public static final int VERIFICA_PRA_ESQUERDA = 2;
@@ -15,31 +15,29 @@ public class Utils {
     public static final int VERIFICA_DIAGONAL_BAIXO = 5;
     public static final int VERIFICA_SECUNDARIA_CIMA = 6;
     public static final int VERIFICA_SECUNDARIA_BAIXO = 7;
-    
+
     public static Random gerador = new Random();
-    
+
     public static void questComecarNova() {
-//        int opc = JOptionPane.showConfirmDialog(null, "Começar nova partida?");
-        String[] buttons = {"Jogador", "Bot", "Sair"};
-        int opc = JOptionPane.showOptionDialog(null, "Jogar contra quem?", "Nova Partida",
-                JOptionPane.YES_NO_CANCEL_OPTION, 3, null, buttons, null);
-        System.out.println(opc); // 0 - ok; 1- nao; 2 - cancel
-        if (opc == 0) {
-            System.out.println("Nova");
-            Gomoku.roboJogando = false;
-        } else if (opc == 1) {
-            Gomoku.roboJogando = true;
-        } else {
-            System.exit(0);
-        }
+//        //        int opc = JOptionPane.showConfirmDialog(null, "Começar nova partida?");
+//        String[] buttons = {"Jogador", "Bot", "Sair"};
+//        int opc = JOptionPane.showOptionDialog(null, "Jogar contra quem?", "Nova Partida",
+//                JOptionPane.YES_NO_CANCEL_OPTION, 3, null, buttons, null);
+//        System.out.println(opc); // 0 - ok; 1- nao; 2 - cancel
+//        if (opc == 0) {
+//            System.out.println("Nova");
+//            Gomoku.roboJogando = false;
+//        } else if (opc == 1) {
+//            Gomoku.roboJogando = true;
+//        } else {
+//            System.exit(0);
+//        }
         Gomoku.partida.novaPartida();
         Gomoku.partida.tabuleiro.getTabuleiro().repaint();
         Gomoku.partida.tabuleiro.getTabuleiro().revalidate();
     }
-    
-    
-    public static int verificaGanhador(byte[][] tabuleiro, int i, int j) {
 
+    public static int verificaGanhador(byte[][] tabuleiro, int i, int j) {
         int contadorCimaBaixo;
         int contadorEsquerdaDireita;
         int contadorDiagonalPrincipal;
@@ -60,11 +58,11 @@ public class Utils {
         if (contadorDiagonalSecundaria >= 4 || contadorDiagonalPrincipal >= 4 || contadorEsquerdaDireita >= 4 || contadorCimaBaixo >= 4) {//4 porque considera a propria peca 
             IConfiguracoes.config.load();
             Configuracao c = IConfiguracoes.config;
-        
-            if(tabuleiro[i][j]==1){
+
+            if (tabuleiro[i][j] == 1) {
                 JOptionPane.showMessageDialog(null, "Ganhou o jogador " + c.getNome1());
                 System.out.println("Ganhou o Jogador" + c.getNome1());
-            }else if(tabuleiro[i][j]==2){
+            } else if (tabuleiro[i][j] == 2) {
                 JOptionPane.showMessageDialog(null, "Ganhou o jogador " + c.getNome2());
                 System.out.println("Ganhou o Jogador" + c.getNome2());
             }
@@ -88,7 +86,7 @@ public class Utils {
         int contadorSucesso = 0;
         byte valor = 0;
         int count = 0;
-        
+
         while (continua) {
             posicao++;
             valor = 0;//é necessário apagar o valor senão estraga a lógica e entra em looping
@@ -150,110 +148,5 @@ public class Utils {
             }
         }
         return contadorSucesso;
-    }
-    
-    public static int[] jogadaRobo(byte[][] tabuleiro, int i, int j, int nivel) {
-        int[] posicoes = {0, 0};
-        int evitaDemora = 0;
-        boolean empatou = false;
-
-        int linha = 1;
-        int coluna = 1;
-        int contadorCimaBaixo;
-        int contadorEsquerdaDireita;
-        int contadorDiagonalPrincipal;
-        int contadorDiagonalSecundaria;
-
-        contadorEsquerdaDireita = verificaPosicoes(tabuleiro, i, j, VERIFICA_PRA_ESQUERDA);
-        contadorEsquerdaDireita += verificaPosicoes(tabuleiro, i, j, VERIFICA_PRA_DIREITA);
-
-        contadorCimaBaixo = verificaPosicoes(tabuleiro, i, j, VERIFICA_PRA_CIMA);
-        contadorCimaBaixo += verificaPosicoes(tabuleiro, i, j, VERIFICA_PRA_BAIXO);
-
-        contadorDiagonalPrincipal = verificaPosicoes(tabuleiro, i, j, VERIFICA_DIAGONAL_CIMA);
-        contadorDiagonalPrincipal += verificaPosicoes(tabuleiro, i, j, VERIFICA_DIAGONAL_BAIXO);
-
-        contadorDiagonalSecundaria = verificaPosicoes(tabuleiro, i, j, VERIFICA_SECUNDARIA_CIMA);
-        contadorDiagonalSecundaria += verificaPosicoes(tabuleiro, i, j, VERIFICA_SECUNDARIA_BAIXO);
-
-        if (tabuleiro[i][j] != 0 && contadorCimaBaixo >= nivel && contadorCimaBaixo >= contadorEsquerdaDireita && contadorCimaBaixo >= contadorDiagonalPrincipal && contadorCimaBaixo >= contadorDiagonalSecundaria) {
-            if (i + linha >= 0 && i + linha < 15) {
-                if (tabuleiro[i + linha][j] == 0) {
-                    i = i + linha;
-                }
-            }
-            if (i - linha >= 0 && i - linha < 15) {
-                if (tabuleiro[i - linha][j] == 0) {
-                    i = i - linha;
-                }
-            }
-        }
-        if (tabuleiro[i][j] != 0 && contadorEsquerdaDireita >= nivel && contadorEsquerdaDireita >= contadorCimaBaixo && contadorEsquerdaDireita >= contadorDiagonalPrincipal && contadorEsquerdaDireita >= contadorDiagonalSecundaria) {
-            if (j + coluna >= 0 && j + coluna < 15) {
-                if (tabuleiro[i][j + coluna] == 0) {
-                    j = j + coluna;
-                }
-            }
-            if (j - coluna >= 0 && j - coluna < 15) {
-                if (tabuleiro[i][j - coluna] == 0) {
-                    j = j - coluna;
-                }
-            }
-        }
-        if (tabuleiro[i][j] != 0 && contadorDiagonalPrincipal >= nivel && contadorDiagonalPrincipal >= contadorCimaBaixo && contadorDiagonalPrincipal >= contadorEsquerdaDireita && contadorDiagonalPrincipal >= contadorDiagonalSecundaria) {
-            if (i - linha >= 0 && i - linha < 15 && j - coluna < 15 && j - coluna >= 0) {
-                if (tabuleiro[i - linha][j - coluna] == 0) {
-                    j = j - coluna;
-                    i = i - linha;
-                }
-            }
-            if (i + linha < 15 && i + linha >= 0 && coluna + j < 15 && coluna + j >= 0) {
-                if (tabuleiro[i + linha][j + coluna] == 0) {
-                    j = coluna + j;
-                    i = i + linha;
-                }
-            }
-        }
-        if (tabuleiro[i][j] != 0 && contadorDiagonalSecundaria >= nivel && contadorDiagonalSecundaria >= contadorCimaBaixo && contadorDiagonalSecundaria >= contadorEsquerdaDireita && contadorDiagonalSecundaria >= contadorDiagonalPrincipal) {
-            if (i - linha >= 0 && i - linha < 15 && j + coluna < 15 && j + coluna >= 0) {
-                if (tabuleiro[i - linha][j + coluna] == 0) {
-                    j = j + coluna;
-                    i = i - linha;
-                }
-            }
-            if (i + linha < 15 && i + linha >= 0 && j - coluna < 15 && j - coluna >= 0) {
-                if (tabuleiro[i + linha][j - coluna] == 0) {
-                    j = j - coluna;
-                    i = i + linha;
-                }
-            }
-        }
-        if (nivel > 0) { // faz algumas randomicas se o nivel for mais fraco
-            while (tabuleiro[i][j] != 0 && evitaDemora < 30) {
-                i = gerador.nextInt(14);
-                j = gerador.nextInt(14);
-                evitaDemora++;
-            }
-            evitaDemora = 0;
-        }
-        while (empatou == false && tabuleiro[i][j] != 0) {//em sequencia, para tentar ganhar
-            for (int k = 0; k < 15; k++) {
-                for (int l = 0; l < 15; l++) {
-                    if (tabuleiro[k][l] == 0) {
-                        i = k;
-                        j = l;
-                    }
-                }
-            }
-            empatou = Gomoku.verificaEmpate(tabuleiro);
-            if (empatou) {
-                JOptionPane.showMessageDialog(null, "Empatou");
-                System.out.println("Empatou!");
-            }
-        }
-        posicoes[0] = i;
-        posicoes[1] = j;
-
-        return posicoes;
     }
 }

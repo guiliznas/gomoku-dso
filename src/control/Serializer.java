@@ -16,7 +16,6 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 import model.Configuracao;
-import model.Dificuldade;
 import model.Partida;
 
 public class Serializer {
@@ -125,7 +124,6 @@ public class Serializer {
                 String configText = configI.nextLine();
                 config.setNome1(configText.split(" - ")[0]);
                 config.setNome2(configText.split(" - ")[1]);
-                config.setNivelBot(Dificuldade.valueOf(configText.split(" - ")[2]));
                 config.setTamanhoTabuleiro(Integer.parseInt(configText.split(" - ")[3]));
                 config.setCorPartida(new Color(Integer.parseInt(configText.split(" - ")[4])));
                 config.setCorTabuleiro(new Color(Integer.parseInt(configText.split(" - ")[5])));
@@ -160,8 +158,8 @@ public class Serializer {
     public void salvarConfiguracao(Configuracao c) {
         openFileConfig();
         try {
-            configO.format("%s - %s - %s - %d - %s - %s\n", c.getNome1(),
-                    c.getNome2(), c.getNivelBot(),
+            configO.format("%s - %s - %d - %s - %s\n", c.getNome1(),
+                    c.getNome2(),
                     c.getTamanhoTabuleiro(), Integer.toString(c.getCorPartida().getRGB()),
                     Integer.toString(c.getCorTabuleiro().getRGB()));
             System.out.println("Configuração salva.");

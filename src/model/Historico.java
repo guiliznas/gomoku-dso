@@ -24,13 +24,13 @@ public class Historico {
         }
         if (partidas == null) {
             partidas = new ArrayList<>();
-            Partida p = new Partida(new Pessoa("Teste1"), new Pessoa("Teste2"));
+            Partida p = new Partida(new Jogador("Teste1"), new Jogador("Teste2"));
             p.setVencedor("Teste1");
             partidas.add(p);
-            p = new Partida(new Pessoa("Teste1"), new Pessoa("Teste2"));
+            p = new Partida(new Jogador("Teste1"), new Jogador("Teste2"));
             p.setVencedor("Teste1");
             partidas.add(p);
-            p = new Partida(new Pessoa("Teste1"), new Pessoa("Teste2"));
+            p = new Partida(new Jogador("Teste1"), new Jogador("Teste2"));
             p.setVencedor("Teste2");
             partidas.add(p);
         }

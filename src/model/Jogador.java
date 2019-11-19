@@ -2,7 +2,7 @@ package model;
 
 import java.io.Serializable;
 
-public abstract class Jogador implements Serializable{
+public class Jogador implements Serializable{
 
     private String nome;
 

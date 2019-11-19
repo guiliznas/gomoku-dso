@@ -7,7 +7,6 @@ public class Configuracao {
     
     private String nome1 = "Jogador 1";
     private String nome2 = "Jogador 2";
-    private Dificuldade nivelBot = Dificuldade.FACIL;
     private Color corTabuleiro;
     private Color corPartida;
     private int tamanhoTabuleiro = 15;
@@ -22,7 +21,6 @@ public class Configuracao {
         if (c != null) {
             this.nome1 = c.getNome1();
             this.nome2 = c.getNome2();
-            this.nivelBot = c.getNivelBot();
             this.corPartida = c.getCorPartida();
             this.corTabuleiro = c.getCorTabuleiro();
             this.tamanhoTabuleiro = c.getTamanhoTabuleiro();
@@ -43,14 +41,6 @@ public class Configuracao {
 
     public void setNome2(String nome2) {
         this.nome2 = nome2;
-    }
-
-    public Dificuldade getNivelBot() {
-        return nivelBot;
-    }
-
-    public void setNivelBot(Dificuldade nivelBot) {
-        this.nivelBot = nivelBot;
     }
 
     public Color getCorTabuleiro() {
@@ -79,7 +69,7 @@ public class Configuracao {
 
     @Override
     public String toString() {
-        return "Configuracao{" + "nome1=" + nome1 + ", nome2=" + nome2 + ", nivelBot=" + nivelBot + ", corTabuleiro=" + corTabuleiro + ", corPartida=" + corPartida + ", tamanhoTabuleiro=" + tamanhoTabuleiro + '}';
+        return "Configuracao{" + "nome1=" + nome1 + ", nome2=" + nome2 + ", corTabuleiro=" + corTabuleiro + ", corPartida=" + corPartida + ", tamanhoTabuleiro=" + tamanhoTabuleiro + '}';
     }
     
 }
