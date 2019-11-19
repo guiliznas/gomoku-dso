@@ -46,17 +46,12 @@ public class ISobre extends JDialog{
         this.versaoJLabel.setFont(new Font("Serif", Font.PLAIN, 20));
         this.versaoJLabel.setHorizontalAlignment(JLabel.CENTER);
 
-//        this.direitosJLabel = new JLabel("Trabalho apresentado a disciplina de Desenvolvimento de Sistemas Orientados a Objetos I");
-//        this.direitosJLabel.setFont(new Font("Serif", Font.PLAIN, 10));
-//        this.direitosJLabel.setHorizontalAlignment(JLabel.CENTER);
-
         this.sobreJDialog.add(this.gifJLabel);
         this.sobreJDialog.add(this.sobreJLabel);
         this.sobreJDialog.add(this.autor1JLabel);
         this.sobreJDialog.add(this.autor2JLabel);
         this.sobreJDialog.add(this.autor3JLabel);
         this.sobreJDialog.add(this.versaoJLabel);
-//        this.sobreJDialog.add(this.direitosJLabel);
 
         
     }

@@ -85,11 +85,14 @@ public class IPartida extends JFrame {
         Gomoku.tabuleiro.reset();
         IConfiguracoes.config.load();
         Configuracao c = IConfiguracoes.config;
+        placarJogador1JLabel.setText("Brancas  - " + c.getNome1() + "  |");
+        placarJogador2JLabel.setText("|   " + c.getNome2() + " -   Pretas");
         Gomoku.part = new Partida(new Jogador(c.getNome1()), new Jogador(c.getNome2()));
         Gomoku.part.setData(format.format(new Date().getTime()));
 
         timer = null;
         tempoInicio = System.currentTimeMillis();
+        iniciaCronometro();
 
         tabuleiro.getTabuleiro().setBackground(c.getCorTabuleiro());
         panelPlacar.setBackground(c.getCorPartida());
@@ -188,12 +191,12 @@ public class IPartida extends JFrame {
         novoJMenuItem.addActionListener(
                 new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-//                    timer = null;
-//                    placarJogador1JLabel.setText(IConfiguracoes.config.getNome1());
-//                    placarJogador2JLabel.setText(IConfiguracoes.config.getNome2());
-//                    tempoInicio = System.currentTimeMillis();
-//                    iniciaCronometro();
-//                    novaPartida();
+                timer = null;
+                placarJogador1JLabel.setText(IConfiguracoes.config.getNome1());
+                placarJogador2JLabel.setText(IConfiguracoes.config.getNome2());
+                tempoInicio = System.currentTimeMillis();
+                iniciaCronometro();
+                novaPartida();
                 JOptionPane.showMessageDialog(null, "Começar nova partida");
             }
         }
