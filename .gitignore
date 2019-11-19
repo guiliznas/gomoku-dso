@@ -1,4 +1,5 @@
 /Gomoku/nbproject/private/
 /nbproject/private/
-/build/
 *.class
+*.vpp.bak_*
+*.vpp.lck
