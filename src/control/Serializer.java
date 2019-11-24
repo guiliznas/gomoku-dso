@@ -117,16 +117,16 @@ public class Serializer {
             configI = new Scanner(new File("config.txt")).useDelimiter(" - ");
         } catch (FileNotFoundException fileNotFoundException) {
             System.err.println("Error opening file.");
-            System.exit(1);
+//            System.exit(1);
         }
         try {
             while (configI.hasNext()) {
                 String configText = configI.nextLine();
                 config.setNome1(configText.split(" - ")[0]);
                 config.setNome2(configText.split(" - ")[1]);
-                config.setTamanhoTabuleiro(Integer.parseInt(configText.split(" - ")[3]));
-                config.setCorPartida(new Color(Integer.parseInt(configText.split(" - ")[4])));
-                config.setCorTabuleiro(new Color(Integer.parseInt(configText.split(" - ")[5])));
+                config.setTamanhoTabuleiro(Integer.parseInt(configText.split(" - ")[2]));
+                config.setCorPartida(new Color(Integer.parseInt(configText.split(" - ")[3])));
+                config.setCorTabuleiro(new Color(Integer.parseInt(configText.split(" - ")[4])));
             }
         } catch (NoSuchElementException elementException) {
             System.out.println(elementException);

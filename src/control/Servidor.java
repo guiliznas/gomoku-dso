@@ -58,7 +58,7 @@ public class Servidor implements OuvidorProxy {
 
     public String iniciarPartida() {
         try {
-            proxy.iniciarPartida(new Integer(2));
+            proxy.iniciarPartida(new Integer(2)); // TODO: Alterar para 2 para iniciar corretamente
         } catch (NaoConectadoException e) {
             e.printStackTrace();
             return "Erro ao tentar iniciar partida";
@@ -68,7 +68,7 @@ public class Servidor implements OuvidorProxy {
     
     public String realizarJogada(int x, int y) {
         try {
-            proxy.enviaJogada(new Lance(x, y, Gomoku.jogadorAtual));
+            proxy.enviaJogada(new Lance(x, y, Gomoku.meuJogador));
         } catch (NaoJogandoException ex) {
             Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -78,7 +78,7 @@ public class Servidor implements OuvidorProxy {
     @Override
     public void iniciarNovaPartida(Integer posicao) {
         JOptionPane.showMessageDialog(null, "Solicitação de inicio recebida " + posicao);
-        Gomoku.partidaAndamento = true;
+        Gomoku.iniciarNovaPartida(posicao);
     }
 
     @Override
@@ -94,7 +94,6 @@ public class Servidor implements OuvidorProxy {
     @Override
     public void receberJogada(Jogada jogada) {
         Gomoku.mudarPosicao((Lance) jogada);
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

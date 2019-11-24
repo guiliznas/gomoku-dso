@@ -74,6 +74,7 @@ public class Utils {
                 System.out.println(ex);
             }
             s.addPartida(Gomoku.part);
+            Gomoku.partidaAndamento = false;
             return tabuleiro[i][j];//retorna o jogador ganhador
         } else {
             return 0; //ninguém ganhou

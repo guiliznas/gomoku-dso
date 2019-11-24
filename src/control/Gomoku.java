@@ -13,6 +13,7 @@ public class Gomoku {
 
     public static IPartida partida;
     public static String jogadorAtual = "Jogador1";
+    public static String meuJogador = "Jogador1";
 
     public static Tabuleiro tabuleiro = new Tabuleiro(15);
     public static JButton[][] matrizBotoes = new JButton[15][15];
@@ -44,11 +45,21 @@ public class Gomoku {
             }
         }
         System.out.println(partida.configuracoes);
+//        Utils.questComecarNova();
+    }
+    
+    public static void iniciarNovaPartida(Integer posicao) {
+        meuJogador = "Jogador"+posicao;
+        partidaAndamento = true;
         Utils.questComecarNova();
     }
 
     public static void jogada(int i, int j) {
-        if (jogadorAtual == "Jogador1") {
+        if (!partidaAndamento) {
+            JOptionPane.showMessageDialog(null, "Nenhuma partida em andamento");
+            return;
+        }
+        if (jogadorAtual.equals(meuJogador)) {
             System.out.println("Jogada de: " + jogadorAtual);
             if (tabuleiro.getPosicao(i, j) == 0) {
                 if (partidaAndamento) {
@@ -66,25 +77,21 @@ public class Gomoku {
                 }
                 System.out.println("Não foi possivel jogar");
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "Não é a sua vez de jogar");
         }
 
-//        if (roboJogando && jogadorAtual == "Jogador2") { //robo jogando
-//            System.out.println("Jogada de: " + jogadorAtual);
-//            int[] linhaColuna = Utils.jogadaRobo(tabuleiro.get(), i, j, IConfiguracoes.config.getNivelBot().get());//ultimo argumento é o nivel de dificuldade
-//            //0 é dificil - 1 é médio - 2 é facil
-//            tabuleiro.get()[linhaColuna[0]][linhaColuna[1]] = 2;
-//            matrizBotoes[linhaColuna[0]][linhaColuna[1]].setIcon(icone2);
-//            Utils.verificaGanhador(tabuleiro.get(), linhaColuna[0], linhaColuna[1]);
-//            jogadorAtual = "Jogador1";//depois da jogada do robo passa a jogada pro player
+//        if (part.getVencedor() != null) {
+//            Utils.questComecarNova();
 //        }
-        if (part.getVencedor() != null) {
-            Utils.questComecarNova();
-        }
     }
 
     public static void mudarPosicao(Lance jogada) {
-        tabuleiro.get()[jogada.getLinha()][jogada.getColuna()] = jogada.getJogador() == "Jogador1" ? (byte) 1 : (byte) 2; //operador ternário
-        matrizBotoes[jogada.getLinha()][jogada.getColuna()].setIcon(icone1);
+        tabuleiro.get()[jogada.getLinha()][jogada.getColuna()] = jogada.getJogador().equals("Jogador1") ? (byte) 1 : (byte) 2; //operador ternário
+        matrizBotoes[jogada.getLinha()][jogada.getColuna()].setIcon(jogada.getJogador().equals("Jogador1") ? icone1 : icone2);
+        jogadorAtual = jogada.getJogador().equals("Jogador1") ? "Jogador2" : "Jogador1";
+        
+        Utils.verificaGanhador(tabuleiro.get(), jogada.getLinha(), jogada.getColuna());
     }
 
     public static void resetJogadorAtual() {

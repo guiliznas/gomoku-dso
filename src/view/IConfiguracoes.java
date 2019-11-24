@@ -92,8 +92,12 @@ public class IConfiguracoes extends JDialog {
                 c.setCorPartida(colors.get(corPartidaJComboBox.getSelectedItem()));
                 c.setCorTabuleiro(colors.get(corTabuleiroJComboBox.getSelectedItem()));
                 s.salvarConfiguracao(c);
+                System.out.println("Fechar");
                 System.out.println("salvo");
                 JOptionPane.showMessageDialog(null, "Salvo");
+                fechar();
+                dispose(); // Or whatever else
+                setVisible(false);
             }
         });
 
@@ -109,6 +113,11 @@ public class IConfiguracoes extends JDialog {
         this.configuracoesJDialog.add(this.cancelJButton);
         this.configuracoesJDialog.add(this.okJButton);
 
+    }
+    
+    public void fechar(){
+        System.out.println("Fechar raiz");
+        this.dispose();
     }
 
     public JDialog getConfiguracoes() {

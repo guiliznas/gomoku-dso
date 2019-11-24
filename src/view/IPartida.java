@@ -22,11 +22,6 @@ public class IPartida extends JFrame {
     private JMenuItem itemIniciar;
     private JMenuItem itemDesconectar;
 
-    private JMenu arquivoJMenu;// menu arquivo
-    private JMenuItem novoJMenuItem;//item arquivo-novo 
-    private JMenuItem salvarJMenuItem; //item arquivo - salvar 
-    private JMenuItem sairJMenuItem;//item arquivo - sair 
-
     private JMenu opcoesJMenu;// menu opcoes
     private JMenuItem configuracoesJMenuItem;//item opcoes-configuracoes
     private JMenuItem historicoJMenuItem; //item opcoes-historico 
@@ -88,6 +83,7 @@ public class IPartida extends JFrame {
         placarJogador1JLabel.setText("Brancas  - " + c.getNome1() + "  |");
         placarJogador2JLabel.setText("|   " + c.getNome2() + " -   Pretas");
         Gomoku.part = new Partida(new Jogador(c.getNome1()), new Jogador(c.getNome2()));
+        System.out.println("Partida iniciada");
         Gomoku.part.setData(format.format(new Date().getTime()));
 
         timer = null;
@@ -182,45 +178,6 @@ public class IPartida extends JFrame {
         netgamesMenu.add(itemDesconectar);
         barraJMenuBar.add(netgamesMenu);
 
-        arquivoJMenu = new JMenu("Partida");
-        barraJMenuBar.add(arquivoJMenu);
-
-        novoJMenuItem = new JMenuItem("Novo");
-        arquivoJMenu.add(novoJMenuItem);
-        arquivoJMenu.addSeparator();
-        novoJMenuItem.addActionListener(
-                new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                timer = null;
-                placarJogador1JLabel.setText(IConfiguracoes.config.getNome1());
-                placarJogador2JLabel.setText(IConfiguracoes.config.getNome2());
-                tempoInicio = System.currentTimeMillis();
-                iniciaCronometro();
-                novaPartida();
-                JOptionPane.showMessageDialog(null, "Começar nova partida");
-            }
-        }
-        );
-
-//        salvarJMenuItem = new JMenuItem( "Salvar" );
-//        arquivoJMenu.add( salvarJMenuItem );
-//        arquivoJMenu.addSeparator();
-        sairJMenuItem = new JMenuItem("Sair");
-        arquivoJMenu.add(sairJMenuItem);
-        sairJMenuItem.addActionListener(
-                new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                placarJogador1JLabel.setText("     Jogador 1     ");
-                tempoJogoJLabel.setText("     Tempo     ");
-                placarJogador2JLabel.setText("     Jogador 2     ");
-                if (timer != null) {
-                    timer.cancel();
-                }
-                System.exit(0);
-            }
-        }
-        );
-
         opcoesJMenu = new JMenu("Opcoes");
         barraJMenuBar.add(opcoesJMenu);
 
@@ -231,7 +188,6 @@ public class IPartida extends JFrame {
                 new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 criarConfiguracoes();
-//                   JOptionPane.showMessageDialog(null, "Abrir configurações");
             }
         }
         );
@@ -244,7 +200,6 @@ public class IPartida extends JFrame {
             public void actionPerformed(ActionEvent event) {
                 criarHistorico();
                 historico.preencherTabela();
-//                   JOptionPane.showMessageDialog(null, "Abrir historico");
             }
         }
         );
@@ -256,7 +211,6 @@ public class IPartida extends JFrame {
             public void actionPerformed(ActionEvent event) {
                 criarRanking();
                 ranking.preencherTabela();
-//                   JOptionPane.showMessageDialog(null, "Abrir ranking");
             }
         }
         );
