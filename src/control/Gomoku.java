@@ -22,8 +22,6 @@ public class Gomoku {
     public static ImageIcon icone2;
     public static ImageIcon icone0;
 
-    public static boolean roboJogando = false;
-
     public static Partida part;
 
     public static Servidor ngServer;

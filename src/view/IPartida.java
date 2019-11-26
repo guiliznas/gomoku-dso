@@ -9,6 +9,7 @@ import java.util.TimerTask;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import control.Gomoku;
+import control.Serializer;
 import model.Configuracao;
 import model.Partida;
 import model.Jogador;
@@ -150,7 +151,19 @@ public class IPartida extends JFrame {
         itemConectar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                String retorno = Gomoku.conectar("localhost", "user1");
+                String server = JOptionPane.showInputDialog("Servidor");
+                if (server.equals("")) {
+                    server = "localhost";
+                }
+                String usuario = JOptionPane.showInputDialog("Nome de usuário");
+                if (usuario.equals("")) {
+                    usuario = "user1";
+                } else {
+                    configuracoes.config.setNome1(usuario);
+                    Serializer s = new Serializer();
+                    s.salvarConfiguracao(configuracoes.config);
+                }
+                String retorno = Gomoku.conectar(server, usuario);
                 System.out.println("Conectar");
                 JOptionPane.showMessageDialog(null, retorno);
             }
