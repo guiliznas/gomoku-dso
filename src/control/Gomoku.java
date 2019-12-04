@@ -3,6 +3,7 @@ package control;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import model.Configuracao;
 import model.Lance;
 import model.Partida;
 import model.Tabuleiro;
@@ -27,7 +28,16 @@ public class Gomoku {
     public static Servidor ngServer;
     public static boolean conectado = false;
     public static boolean partidaAndamento = false;
-
+    
+    public static final int VERIFICA_PRA_CIMA = 0;
+    public static final int VERIFICA_PRA_BAIXO = 1;
+    public static final int VERIFICA_PRA_ESQUERDA = 2;
+    public static final int VERIFICA_PRA_DIREITA = 3;
+    public static final int VERIFICA_DIAGONAL_CIMA = 4;
+    public static final int VERIFICA_DIAGONAL_BAIXO = 5;
+    public static final int VERIFICA_SECUNDARIA_CIMA = 6;
+    public static final int VERIFICA_SECUNDARIA_BAIXO = 7;
+    
     public Gomoku() {
         ngServer = new Servidor();
         partida = new IPartida();
@@ -42,14 +52,128 @@ public class Gomoku {
                 matrizBotoes[i][j].setIcon(icone0);
             }
         }
-        System.out.println(partida.configuracoes);
-//        Utils.questComecarNova();
+    }
+   
+    public static int verificaGanhador(byte[][] tabuleiro, int i, int j) {
+        int contadorCimaBaixo;
+        int contadorEsquerdaDireita;
+        int contadorDiagonalPrincipal;
+        int contadorDiagonalSecundaria;
+
+        contadorCimaBaixo = verificaPosicoes(tabuleiro, i, j, VERIFICA_PRA_CIMA);
+        contadorCimaBaixo += verificaPosicoes(tabuleiro, i, j, VERIFICA_PRA_BAIXO);
+
+        contadorEsquerdaDireita = verificaPosicoes(tabuleiro, i, j, VERIFICA_PRA_ESQUERDA);
+        contadorEsquerdaDireita += verificaPosicoes(tabuleiro, i, j, VERIFICA_PRA_DIREITA);
+
+        contadorDiagonalPrincipal = verificaPosicoes(tabuleiro, i, j, VERIFICA_DIAGONAL_CIMA);
+        contadorDiagonalPrincipal += verificaPosicoes(tabuleiro, i, j, VERIFICA_DIAGONAL_BAIXO);
+
+        contadorDiagonalSecundaria = verificaPosicoes(tabuleiro, i, j, VERIFICA_SECUNDARIA_CIMA);
+        contadorDiagonalSecundaria += verificaPosicoes(tabuleiro, i, j, VERIFICA_SECUNDARIA_BAIXO);
+
+        if (contadorDiagonalSecundaria >= 4 || contadorDiagonalPrincipal >= 4 || contadorEsquerdaDireita >= 4 || contadorCimaBaixo >= 4) {//4 porque considera a propria peca 
+            IConfiguracoes.config.load();
+            Configuracao c = IConfiguracoes.config;
+
+            if (tabuleiro[i][j] == 1) {
+                JOptionPane.showMessageDialog(null, "Ganhou o jogador " + c.getNome1());
+                System.out.println("Ganhou o Jogador" + c.getNome1());
+            } else if (tabuleiro[i][j] == 2) {
+                JOptionPane.showMessageDialog(null, "Ganhou o jogador " + c.getNome2());
+                System.out.println("Ganhou o Jogador" + c.getNome2());
+            }
+            Serializer s = new Serializer();
+            try {
+                Gomoku.part.setVencedor(tabuleiro[i][j] == 1 ? Gomoku.part.getJogador1().getNome() : Gomoku.part.getJogador2().getNome());
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+            s.addPartida(Gomoku.part);
+            Gomoku.partidaAndamento = false;
+            return tabuleiro[i][j];//retorna o jogador ganhador
+        } else {
+            return 0; //ninguém ganhou
+        }
+    }
+
+    public static int verificaPosicoes(byte[][] tabuleiro, int i, int j, int lugar) {
+        boolean continua = true;
+        int posicao = 0;
+        int contadorSucesso = 0;
+        byte valor = 0;
+        int count = 0;
+
+        while (continua) {
+            posicao++;
+            valor = 0;//é necessário apagar o valor senão estraga a lógica e entra em looping
+
+            switch (lugar) {
+                case VERIFICA_PRA_CIMA:
+                    if (i - posicao >= 0) {//verifiquei com if antes de ler na matriz para não dar arrayoutofbounds
+                        valor = tabuleiro[i - posicao][j];
+                    }
+                    break;
+                case VERIFICA_PRA_BAIXO:
+                    if (i + posicao < 15) {
+                        valor = tabuleiro[i + posicao][j];
+                    }
+                    break;
+                case VERIFICA_PRA_ESQUERDA:
+                    if ((j - posicao) >= 0) {
+                        valor = tabuleiro[i][j - posicao];
+                    }
+                    break;
+                case VERIFICA_PRA_DIREITA:
+                    if ((j + posicao) < 15) {
+                        valor = tabuleiro[i][j + posicao];
+                    }
+                    break;
+                case VERIFICA_DIAGONAL_CIMA:
+                    if ((i - posicao >= 0) && (j - posicao >= 0)) {
+                        valor = tabuleiro[i - posicao][j - posicao];
+                    }
+                    break;
+                case VERIFICA_DIAGONAL_BAIXO:
+                    if ((i + posicao < 15) && (j + posicao < 15)) {
+                        valor = tabuleiro[i + posicao][j + posicao];
+                    }
+                    break;
+                case VERIFICA_SECUNDARIA_CIMA:
+                    if ((i - posicao >= 0) && (j + posicao < 15)) {
+                        valor = tabuleiro[i - posicao][j + posicao];
+                    }
+                    break;
+                case VERIFICA_SECUNDARIA_BAIXO:
+                    if ((i + posicao < 15) && (j - posicao >= 0)) {
+                        valor = tabuleiro[i + posicao][j - posicao];
+                    }
+                    break;
+                default:
+                    System.out.println("Opcao invalida!");
+                    break;
+            }
+
+            if (tabuleiro[i][j] == valor) {
+                contadorSucesso++;
+                count++;
+                if (count > 50) {
+                    continua = false;
+                }
+            } else {
+                continua = false;
+            }
+        }
+        return contadorSucesso;
     }
     
     public static void iniciarNovaPartida(Integer posicao) {
         meuJogador = "Jogador"+posicao;
         partidaAndamento = true;
-        Utils.questComecarNova();
+
+        partida.iniciarPartida();
+        partida.tabuleiro.getTabuleiro().repaint();
+        partida.tabuleiro.getTabuleiro().revalidate();
     }
 
     public static void jogada(int i, int j) {
@@ -58,30 +182,21 @@ public class Gomoku {
             return;
         }
         if (jogadorAtual.equals(meuJogador)) {
-            System.out.println("Jogada de: " + jogadorAtual);
             if (tabuleiro.getPosicao(i, j) == 0) {
-                if (partidaAndamento) {
-                    ngServer.realizarJogada(i, j);
-                }
+                ngServer.realizarJogada(i, j);
                 tabuleiro.get()[i][j] = jogadorAtual == "Jogador1" ? (byte) 1 : (byte) 2; //operador ternário
                 matrizBotoes[i][j].setIcon(jogadorAtual == "Jogador1" ? icone1 : icone2);
                 jogadorAtual = jogadorAtual == "Jogador1" ? "Jogador2" : "Jogador1";
 
-                Utils.verificaGanhador(tabuleiro.get(), i, j);
+                verificaGanhador(tabuleiro.get(), i, j);
             } else {
                 if (verificaEmpate(tabuleiro.get())) {
-                    System.out.println("Empatou!!");
                     JOptionPane.showMessageDialog(null, "Empatou");
                 }
-                System.out.println("Não foi possivel jogar");
             }
         } else {
             JOptionPane.showMessageDialog(null, "Não é a sua vez de jogar");
         }
-
-//        if (part.getVencedor() != null) {
-//            Utils.questComecarNova();
-//        }
     }
 
     public static void mudarPosicao(Lance jogada) {
@@ -89,7 +204,7 @@ public class Gomoku {
         matrizBotoes[jogada.getLinha()][jogada.getColuna()].setIcon(jogada.getJogador().equals("Jogador1") ? icone1 : icone2);
         jogadorAtual = jogada.getJogador().equals("Jogador1") ? "Jogador2" : "Jogador1";
         
-        Utils.verificaGanhador(tabuleiro.get(), jogada.getLinha(), jogada.getColuna());
+        verificaGanhador(tabuleiro.get(), jogada.getLinha(), jogada.getColuna());
     }
 
     public static void resetJogadorAtual() {
@@ -109,11 +224,11 @@ public class Gomoku {
     }
 
     // Netgames
-    public static String conectar(String string, String string2) {
+    public static String conectar(String server, String nick) {
         String mensagem = "Não foi possível iniciar"; // Definir condições
         boolean permitido = true;
         if (permitido) {
-            mensagem = ngServer.conectar(string, string2);
+            mensagem = ngServer.conectar(server, nick);
             if (mensagem.equals("Conectado com sucesso!")) {
                 conectado = true;
             }

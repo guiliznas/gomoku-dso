@@ -1,6 +1,5 @@
 package control;
 
-import java.util.Random;
 import javax.swing.JOptionPane;
 import model.Configuracao;
 import view.IConfiguracoes;
@@ -15,27 +14,6 @@ public class Utils {
     public static final int VERIFICA_DIAGONAL_BAIXO = 5;
     public static final int VERIFICA_SECUNDARIA_CIMA = 6;
     public static final int VERIFICA_SECUNDARIA_BAIXO = 7;
-
-    public static Random gerador = new Random();
-
-    public static void questComecarNova() {
-//        //        int opc = JOptionPane.showConfirmDialog(null, "Começar nova partida?");
-//        String[] buttons = {"Jogador", "Bot", "Sair"};
-//        int opc = JOptionPane.showOptionDialog(null, "Jogar contra quem?", "Nova Partida",
-//                JOptionPane.YES_NO_CANCEL_OPTION, 3, null, buttons, null);
-//        System.out.println(opc); // 0 - ok; 1- nao; 2 - cancel
-//        if (opc == 0) {
-//            System.out.println("Nova");
-//            Gomoku.roboJogando = false;
-//        } else if (opc == 1) {
-//            Gomoku.roboJogando = true;
-//        } else {
-//            System.exit(0);
-//        }
-        Gomoku.partida.novaPartida();
-        Gomoku.partida.tabuleiro.getTabuleiro().repaint();
-        Gomoku.partida.tabuleiro.getTabuleiro().revalidate();
-    }
 
     public static int verificaGanhador(byte[][] tabuleiro, int i, int j) {
         int contadorCimaBaixo;
@@ -66,7 +44,6 @@ public class Utils {
                 JOptionPane.showMessageDialog(null, "Ganhou o jogador " + c.getNome2());
                 System.out.println("Ganhou o Jogador" + c.getNome2());
             }
-            //JOptionPane.showMessageDialog(null, "Ganhou o jogador " + tabuleiro[i][j]);
             Serializer s = new Serializer();
             try {
                 Gomoku.part.setVencedor(tabuleiro[i][j] == 1 ? Gomoku.part.getJogador1().getNome() : Gomoku.part.getJogador2().getNome());

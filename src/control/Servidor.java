@@ -77,7 +77,7 @@ public class Servidor implements OuvidorProxy {
 
     @Override
     public void iniciarNovaPartida(Integer posicao) {
-        JOptionPane.showMessageDialog(null, "Solicitação de inicio recebida " + posicao);
+        // JOptionPane.showMessageDialog(null, "Solicitação de inicio recebida " + posicao);
         Gomoku.iniciarNovaPartida(posicao);
     }
 

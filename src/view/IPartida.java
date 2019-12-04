@@ -77,7 +77,7 @@ public class IPartida extends JFrame {
         frame.setLocationRelativeTo(null);
     }
 
-    public void novaPartida() {
+    public void iniciarPartida() {
         Gomoku.tabuleiro.reset();
         IConfiguracoes.config.load();
         Configuracao c = IConfiguracoes.config;
@@ -285,9 +285,5 @@ public class IPartida extends JFrame {
         } else {
             tempoInicio = System.currentTimeMillis();
         }
-    }
-
-    public static void main(String[] args) {
-        IPartida partida = new IPartida();
     }
 }
