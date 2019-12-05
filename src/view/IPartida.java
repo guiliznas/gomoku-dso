@@ -24,12 +24,12 @@ public class IPartida extends JFrame {
     private JMenuItem itemDesconectar;
 
     private JMenu opcoesJMenu;// menu opcoes
-    private JMenuItem configuracoesJMenuItem;//item opcoes-configuracoes
-    private JMenuItem historicoJMenuItem; //item opcoes-historico 
-    private JMenuItem rankingJMenuItem;//item opcoes - ranking 
+    private JMenuItem configuracoesJMenuItem;// item opcoes-configuracoes
+    private JMenuItem historicoJMenuItem; // item opcoes-historico
+    private JMenuItem rankingJMenuItem;// item opcoes - ranking
 
     private JMenu ajudaJMenu;// menu ajuda
-    private JMenuItem sobreJMenuItem;//item ajuda-sobre
+    private JMenuItem sobreJMenuItem;// item ajuda-sobre
 
     private JPanel panelTabuleiro = new JPanel();
     private JPanel panelPlacar;
@@ -101,7 +101,7 @@ public class IPartida extends JFrame {
 
     public void criarTabuleiro() {
         panelTabuleiro = tabuleiro.getTabuleiro();
-        panelTabuleiro.setBounds(20, 50, 500, 500); //(x, y, width, height)
+        panelTabuleiro.setBounds(20, 50, 500, 500); // (x, y, width, height)
         frame.add(panelTabuleiro);
     }
 
@@ -197,48 +197,40 @@ public class IPartida extends JFrame {
         configuracoesJMenuItem = new JMenuItem("Configuracoes");
         opcoesJMenu.add(configuracoesJMenuItem);
         opcoesJMenu.addSeparator();
-        configuracoesJMenuItem.addActionListener(
-                new ActionListener() {
+        configuracoesJMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 criarConfiguracoes();
             }
-        }
-        );
+        });
 
         historicoJMenuItem = new JMenuItem("Historico");
         opcoesJMenu.add(historicoJMenuItem);
         opcoesJMenu.addSeparator();
-        historicoJMenuItem.addActionListener(
-                new ActionListener() {
+        historicoJMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 criarHistorico();
                 historico.preencherTabela();
             }
-        }
-        );
+        });
 
         rankingJMenuItem = new JMenuItem("Ranking");
         opcoesJMenu.add(rankingJMenuItem);
-        rankingJMenuItem.addActionListener(
-                new ActionListener() {
+        rankingJMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 criarRanking();
                 ranking.preencherTabela();
             }
-        }
-        );
+        });
 
         ajudaJMenu = new JMenu("Ajuda");
         barraJMenuBar.add(ajudaJMenu);
         sobreJMenuItem = new JMenuItem("Sobre");
         ajudaJMenu.add(sobreJMenuItem);
-        sobreJMenuItem.addActionListener(
-                new ActionListener() {
+        sobreJMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 criarSobre();
             }
-        }
-        );
+        });
     }
 
     public void criarPlacar() {
@@ -254,7 +246,7 @@ public class IPartida extends JFrame {
         placarJogador2JLabel = new JLabel("     Jogador 2     ");
         panelPlacar.add(placarJogador2JLabel);
 
-        panelPlacar.setBounds(0, 0, 500, 20); //(x, y, width, height)
+        panelPlacar.setBounds(0, 0, 500, 20); // (x, y, width, height)
         frame.add(panelPlacar);
 
     }
@@ -269,13 +261,16 @@ public class IPartida extends JFrame {
             tarefa = new TimerTask() {
                 public void run() {
                     try {
-                        String data = format.format(new Date().getTime());//pega a data atual
-                        long diferenca = ((System.currentTimeMillis() - tempoInicio) / 1000);//armazena a diferença entre o inicio da exucação do programa e o tempo atual
+                        String data = format.format(new Date().getTime());// pega a data atual
+                        long diferenca = ((System.currentTimeMillis() - tempoInicio) / 1000);// armazena a diferença
+                                                                                             // entre o inicio da
+                                                                                             // exucação do programa e o
+                                                                                             // tempo atual
                         tempoJogoJLabel.setText("Tempo: " + diferenca);
                         if (Gomoku.part != null) {
                             Gomoku.part.setDuracao(diferenca);
                         }
-                        //System.out.println(data + "  " + diferenca);  descomente isso se quiser testar
+                        // System.out.println(data + " " + diferenca); descomente isso se quiser testar
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

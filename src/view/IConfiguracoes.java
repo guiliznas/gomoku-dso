@@ -13,7 +13,8 @@ import model.Configuracao;
 
 public class IConfiguracoes extends JDialog {
 
-    private static String[] cores = {"Branco", "Azul", "Verde", "Amarelo", "Laranja", "Cinza", "Vermelho", "Rosa", "Preto"};
+    private static String[] cores = { "Branco", "Azul", "Verde", "Amarelo", "Laranja", "Cinza", "Vermelho", "Rosa",
+            "Preto" };
     private static Map<String, Color> colors = new HashMap<>();
     private JDialog configuracoesJDialog;
 
@@ -55,15 +56,15 @@ public class IConfiguracoes extends JDialog {
         this.configuracoesJDialog.setLayout(null);
 
         this.nome1JLabel = new JLabel("Nome 1:");
-        this.nome1JLabel.setBounds(40, 60, 150, 20); //(x, y, width, height)
+        this.nome1JLabel.setBounds(40, 60, 150, 20); // (x, y, width, height)
         this.nome2JLabel = new JLabel("Nome 2:");
-        this.nome2JLabel.setBounds(40, 100, 150, 20); //(x, y, width, height)
+        this.nome2JLabel.setBounds(40, 100, 150, 20); // (x, y, width, height)
         this.corTabuleiroJLabel = new JLabel("Cor de Fundo Tabuleiro:");
-        this.corTabuleiroJLabel.setBounds(40, 200, 150, 20); //(x, y, width, height)
+        this.corTabuleiroJLabel.setBounds(40, 200, 150, 20); // (x, y, width, height)
         this.corPartidaJLabel = new JLabel("Cor de Fundo Partida:");
-        this.corPartidaJLabel.setBounds(40, 240, 150, 20); //(x, y, width, height)
+        this.corPartidaJLabel.setBounds(40, 240, 150, 20); // (x, y, width, height)
         this.cancelJButton = new JButton("Cancelar");
-        this.cancelJButton.setBounds(90, 300, 100, 20); //(x, y, width, height)
+        this.cancelJButton.setBounds(90, 300, 100, 20); // (x, y, width, height)
         this.cancelJButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -72,15 +73,15 @@ public class IConfiguracoes extends JDialog {
         });
 
         this.nome1JTextField = new JTextField(config == null ? " " : config.getNome1());
-        this.nome1JTextField.setBounds(190, 60, 150, 20); //(x, y, width, height)
+        this.nome1JTextField.setBounds(190, 60, 150, 20); // (x, y, width, height)
         this.nome2JTextField = new JTextField(config == null ? " " : config.getNome2());
-        this.nome2JTextField.setBounds(190, 100, 150, 20); //(x, y, width, height)
+        this.nome2JTextField.setBounds(190, 100, 150, 20); // (x, y, width, height)
         this.corTabuleiroJComboBox = new JComboBox(this.cores);
-        this.corTabuleiroJComboBox.setBounds(190, 200, 150, 20); //(x, y, width, height)
+        this.corTabuleiroJComboBox.setBounds(190, 200, 150, 20); // (x, y, width, height)
         this.corPartidaJComboBox = new JComboBox(this.cores);
-        this.corPartidaJComboBox.setBounds(190, 240, 150, 20); //(x, y, width, height)
+        this.corPartidaJComboBox.setBounds(190, 240, 150, 20); // (x, y, width, height)
         this.okJButton = new JButton("OK");
-        this.okJButton.setBounds(200, 300, 100, 20); //(x, y, width, height)
+        this.okJButton.setBounds(200, 300, 100, 20); // (x, y, width, height)
         JDialog jd = this;
         this.okJButton.addActionListener(new ActionListener() {
             @Override
@@ -114,8 +115,8 @@ public class IConfiguracoes extends JDialog {
         this.configuracoesJDialog.add(this.okJButton);
 
     }
-    
-    public void fechar(){
+
+    public void fechar() {
         System.out.println("Fechar raiz");
         this.dispose();
     }
