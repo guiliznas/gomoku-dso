@@ -54,23 +54,23 @@ public class Gomoku {
         }
     }
    
-    public static int verificaGanhador(byte[][] tabuleiro, int i, int j) {
+    public static int verificarVencedor(byte[][] tabuleiro, int i, int j) {
         int contadorCimaBaixo;
         int contadorEsquerdaDireita;
         int contadorDiagonalPrincipal;
         int contadorDiagonalSecundaria;
 
-        contadorCimaBaixo = verificaPosicoes(tabuleiro, i, j, VERIFICA_PRA_CIMA);
-        contadorCimaBaixo += verificaPosicoes(tabuleiro, i, j, VERIFICA_PRA_BAIXO);
+        contadorCimaBaixo = verificarPosicoes(tabuleiro, i, j, VERIFICA_PRA_CIMA);
+        contadorCimaBaixo += verificarPosicoes(tabuleiro, i, j, VERIFICA_PRA_BAIXO);
 
-        contadorEsquerdaDireita = verificaPosicoes(tabuleiro, i, j, VERIFICA_PRA_ESQUERDA);
-        contadorEsquerdaDireita += verificaPosicoes(tabuleiro, i, j, VERIFICA_PRA_DIREITA);
+        contadorEsquerdaDireita = verificarPosicoes(tabuleiro, i, j, VERIFICA_PRA_ESQUERDA);
+        contadorEsquerdaDireita += verificarPosicoes(tabuleiro, i, j, VERIFICA_PRA_DIREITA);
 
-        contadorDiagonalPrincipal = verificaPosicoes(tabuleiro, i, j, VERIFICA_DIAGONAL_CIMA);
-        contadorDiagonalPrincipal += verificaPosicoes(tabuleiro, i, j, VERIFICA_DIAGONAL_BAIXO);
+        contadorDiagonalPrincipal = verificarPosicoes(tabuleiro, i, j, VERIFICA_DIAGONAL_CIMA);
+        contadorDiagonalPrincipal += verificarPosicoes(tabuleiro, i, j, VERIFICA_DIAGONAL_BAIXO);
 
-        contadorDiagonalSecundaria = verificaPosicoes(tabuleiro, i, j, VERIFICA_SECUNDARIA_CIMA);
-        contadorDiagonalSecundaria += verificaPosicoes(tabuleiro, i, j, VERIFICA_SECUNDARIA_BAIXO);
+        contadorDiagonalSecundaria = verificarPosicoes(tabuleiro, i, j, VERIFICA_SECUNDARIA_CIMA);
+        contadorDiagonalSecundaria += verificarPosicoes(tabuleiro, i, j, VERIFICA_SECUNDARIA_BAIXO);
 
         if (contadorDiagonalSecundaria >= 4 || contadorDiagonalPrincipal >= 4 || contadorEsquerdaDireita >= 4 || contadorCimaBaixo >= 4) {//4 porque considera a propria peca 
             IConfiguracoes.config.load();
@@ -85,11 +85,11 @@ public class Gomoku {
             }
             Serializer s = new Serializer();
             try {
-                Gomoku.part.setVencedor(tabuleiro[i][j] == 1 ? Gomoku.part.getJogador1().getNome() : Gomoku.part.getJogador2().getNome());
+                part.setVencedor(tabuleiro[i][j] == 1 ? part.getJogador1().getNome() : part.getJogador2().getNome());
             } catch (Exception ex) {
                 System.out.println(ex);
             }
-            s.addPartida(Gomoku.part);
+            s.addPartida(part);
             Gomoku.partidaAndamento = false;
             return tabuleiro[i][j];//retorna o jogador ganhador
         } else {
@@ -97,7 +97,11 @@ public class Gomoku {
         }
     }
 
-    public static int verificaPosicoes(byte[][] tabuleiro, int i, int j, int lugar) {
+    public static byte getPosicao(byte[][] tabuleiro, int i, int j) {
+        return tabuleiro[i][j];
+    }
+    
+    public static int verificarPosicoes(byte[][] tabuleiro, int i, int j, int lugar) {
         boolean continua = true;
         int posicao = 0;
         int contadorSucesso = 0;
@@ -111,42 +115,42 @@ public class Gomoku {
             switch (lugar) {
                 case VERIFICA_PRA_CIMA:
                     if (i - posicao >= 0) {//verifiquei com if antes de ler na matriz para não dar arrayoutofbounds
-                        valor = tabuleiro[i - posicao][j];
+                        valor = getPosicao(tabuleiro,i - posicao,j);
                     }
                     break;
                 case VERIFICA_PRA_BAIXO:
                     if (i + posicao < 15) {
-                        valor = tabuleiro[i + posicao][j];
+                        valor = getPosicao(tabuleiro,i + posicao,j);
                     }
                     break;
                 case VERIFICA_PRA_ESQUERDA:
                     if ((j - posicao) >= 0) {
-                        valor = tabuleiro[i][j - posicao];
+                        valor = getPosicao(tabuleiro,i,j - posicao);
                     }
                     break;
                 case VERIFICA_PRA_DIREITA:
                     if ((j + posicao) < 15) {
-                        valor = tabuleiro[i][j + posicao];
+                        valor = getPosicao(tabuleiro,i,j + posicao);
                     }
                     break;
                 case VERIFICA_DIAGONAL_CIMA:
                     if ((i - posicao >= 0) && (j - posicao >= 0)) {
-                        valor = tabuleiro[i - posicao][j - posicao];
+                        valor = getPosicao(tabuleiro, i - posicao, j - posicao);
                     }
                     break;
                 case VERIFICA_DIAGONAL_BAIXO:
                     if ((i + posicao < 15) && (j + posicao < 15)) {
-                        valor = tabuleiro[i + posicao][j + posicao];
+                        valor = getPosicao(tabuleiro, i + posicao, j + posicao);
                     }
                     break;
                 case VERIFICA_SECUNDARIA_CIMA:
                     if ((i - posicao >= 0) && (j + posicao < 15)) {
-                        valor = tabuleiro[i - posicao][j + posicao];
+                        valor = getPosicao(tabuleiro, i - posicao, j + posicao);
                     }
                     break;
                 case VERIFICA_SECUNDARIA_BAIXO:
                     if ((i + posicao < 15) && (j - posicao >= 0)) {
-                        valor = tabuleiro[i + posicao][j - posicao];
+                        valor = getPosicao(tabuleiro, i + posicao, j - posicao);
                     }
                     break;
                 default:
@@ -188,9 +192,9 @@ public class Gomoku {
                 matrizBotoes[i][j].setIcon(jogadorAtual == "Jogador1" ? icone1 : icone2);
                 jogadorAtual = jogadorAtual == "Jogador1" ? "Jogador2" : "Jogador1";
 
-                verificaGanhador(tabuleiro.get(), i, j);
+                verificarVencedor(tabuleiro.get(), i, j);
             } else {
-                if (verificaEmpate(tabuleiro.get())) {
+                if (verificarEmpate(tabuleiro.get())) {
                     JOptionPane.showMessageDialog(null, "Empatou");
                 }
             }
@@ -204,14 +208,14 @@ public class Gomoku {
         matrizBotoes[jogada.getLinha()][jogada.getColuna()].setIcon(jogada.getJogador().equals("Jogador1") ? icone1 : icone2);
         jogadorAtual = jogada.getJogador().equals("Jogador1") ? "Jogador2" : "Jogador1";
         
-        verificaGanhador(tabuleiro.get(), jogada.getLinha(), jogada.getColuna());
+        verificarVencedor(tabuleiro.get(), jogada.getLinha(), jogada.getColuna());
     }
 
     public static void resetJogadorAtual() {
         Gomoku.jogadorAtual = "Jogador1";
     }
 
-    public static boolean verificaEmpate(byte[][] tabuleiro) {
+    public static boolean verificarEmpate(byte[][] tabuleiro) {
         boolean empate = true;
         for (int i = 0; i < 15; i++) { //varre o tabuleiro buscando alguma posição vazia pra jogar
             for (int j = 0; j < 15; j++) {//caso estejam todas ocupadas é porque empatou
@@ -226,7 +230,7 @@ public class Gomoku {
     // Netgames
     public static String conectar(String server, String nick) {
         String mensagem = "Não foi possível iniciar"; // Definir condições
-        boolean permitido = true;
+        boolean permitido = !conectado;
         if (permitido) {
             mensagem = ngServer.conectar(server, nick);
             if (mensagem.equals("Conectado com sucesso!")) {
@@ -237,8 +241,8 @@ public class Gomoku {
     }
 
     public static String desconectar() {
-        String mensagem = "Não foi possível desconectar"; // Definir condições
-        boolean permitido = true;
+        String mensagem = "Não conectado ainda."; // Definir condições
+        boolean permitido = conectado;
         if (permitido) {
             mensagem = ngServer.desconectar();
             if (mensagem.equals("Desconectado com sucesso!")) {
@@ -249,8 +253,8 @@ public class Gomoku {
     }
 
     public static String iniciarPartida() {
-        String mensagem = "Não foi possível iniciar"; // Definir condições
-        boolean permitido = true;
+        String mensagem = "Não conectado ainda."; // Definir condições
+        boolean permitido = conectado;
         if (permitido) {
             mensagem = ngServer.iniciarPartida();
         }

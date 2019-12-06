@@ -151,6 +151,10 @@ public class IPartida extends JFrame {
         itemConectar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
+                if (Gomoku.conectado) {
+                    JOptionPane.showMessageDialog(null, "Já está conectado");
+                    return;
+                }
                 String server = JOptionPane.showInputDialog("Servidor");
                 if (server.equals("")) {
                     server = "localhost";

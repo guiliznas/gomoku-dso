@@ -23,7 +23,7 @@ public class Historico {
             System.out.println(ex);
         }
         if (partidas == null) {
-            partidas = new ArrayList<>();
+            partidas = new ArrayList<Partida>();
             Partida p = new Partida(new Jogador("Teste1"), new Jogador("Teste2"));
             p.setVencedor("Teste1");
             partidas.add(p);

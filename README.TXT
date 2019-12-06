@@ -8,6 +8,8 @@ utilizar ele para executar o projeto.
 Para executar é necessário existir os arquivos config.txt e partidas.ser no
 mesmo caminho que o programa está sendo executado.
 
+Configurações atualizadas ao iniciar partida
+
 ========================
 BUILD OUTPUT DESCRIPTION
 ========================
